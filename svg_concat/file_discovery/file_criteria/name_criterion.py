@@ -1,4 +1,4 @@
-from criterion import Criterion
+from svg_concat.file_discovery.file_criteria.criterion import Criterion
 
 
 class NameCriterion(Criterion):
