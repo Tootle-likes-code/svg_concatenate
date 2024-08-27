@@ -1,2 +1,6 @@
+from svg_concat.ui.app import Application
+
 if __name__ == "__main__":
-    print("Hello World")
+    app = Application()
+    app.master.title("Sample Application")
+    app.mainloop()

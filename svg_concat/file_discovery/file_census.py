@@ -9,8 +9,8 @@ from svg_concat.file_discovery.file_criteria.name_criterion import NameCriterion
 
 
 class FileCensus:
-    def __init__(self, starting_directory: str, criteria: set[Criterion] | None = None,
-                 files_to_find: list[str] = None):
+    def __init__(self, starting_directory: str, criteria: list[Criterion] | None = None,
+                 files_to_find: set[str] = None):
         self.starting_directory = starting_directory
 
         if criteria is None:
@@ -18,10 +18,12 @@ class FileCensus:
         else:
             self.criteria = criteria
 
-        if files_to_find is not None or files_to_find != []:
-            self.files_to_find: NameCriterion = name_criterion.create_criterion(files_to_find)
-            if self.files_to_find is not None:
-                self.criteria.add(self.files_to_find)
+        if files_to_find is None  and files_to_find == []:
+            raise ValueError('Either files_to_find or files_to_find must be specified')
+
+        self.files_to_find: NameCriterion = name_criterion.create_criterion(files_to_find)
+        if self.files_to_find is not None:
+            self.criteria.add(self.files_to_find)
 
     def search_directory(self) -> CensusResult:
         search_result_builder = census_result_builder.create_census_result()

@@ -20,7 +20,6 @@ class CensusResult:
 
         return True
 
-
     @property
     def is_success(self) -> bool:
         return len(self.found_files) > 0 and len(self.missing_files) == 0
@@ -29,3 +28,6 @@ class CensusResult:
     def is_failure(self):
         return not self.is_success
 
+    @property
+    def has_missing_files(self):
+        return len(self.missing_files) > 0
