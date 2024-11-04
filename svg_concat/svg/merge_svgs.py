@@ -1,36 +1,29 @@
-import re
 from xml.etree import ElementTree as ET
 
-
-def parse_unit(value):
-    """Parse a value with units like '91.302299mm' into pixels."""
-    match = re.match(r"([\d.]+)(\w+)?", value)
-    if not match:
-        raise ValueError(f"Cannot parse value: {value}")
-
-    num, unit = match.groups()
-    num = float(num)
-
-    # Conversion factors to pixels
-    conversions = {
-        'mm': 3.7795275591,  # 1 mm = 3.7795275591 px
-        'cm': 37.795275591,  # 1 cm = 37.795275591 px
-        'in': 96,  # 1 inch = 96 px
-        'pt': 1.3333333333,  # 1 point = 1.3333333333 px
-        'pc': 16,  # 1 pica = 16 px
-        'px': 1,  # 1 px = 1 px
-        None: 1  # No unit means pixels
-    }
-
-    return num * conversions.get(unit, 1)
+from svg_concat.svg.grid_merge import GridMergeJob
+from svg_concat.svg.measurement_unit import convert_to_pixels
 
 
-def merge_svgs(output_file='merged.svg', side_by_side=True, *svg_files):
+def merge_svgs(output_file='merged.svg', *svg_files):
+    svgs = [ET.parse(svg_file).getroot() for svg_file in svg_files]
+
+    grid_merge_job = GridMergeJob(svgs)
+
+    _write_merged_svg(output_file, grid_merge_job.svg)
+
+
+def _write_merged_svg(output_file, merged_svg):
+    # Write the merged SVG to a file
+    with open(output_file, 'w') as f:
+        ET.ElementTree(merged_svg).write(f, encoding='unicode', xml_declaration=True)
+
+
+def line_merge_svgs(output_file='merged.svg', side_by_side=True, *svg_files):
     svgs = [ET.parse(svg_file).getroot() for svg_file in svg_files]
 
     # Calculate the total width and height
-    widths = [parse_unit(svg.attrib['width']) for svg in svgs]
-    heights = [parse_unit(svg.attrib['height']) for svg in svgs]
+    widths = [convert_to_pixels(svg.attrib['width']) for svg in svgs]
+    heights = [convert_to_pixels(svg.attrib['height']) for svg in svgs]
 
     if side_by_side:
         total_width = sum(widths)
@@ -66,6 +59,4 @@ def merge_svgs(output_file='merged.svg', side_by_side=True, *svg_files):
         else:
             current_y += height
 
-    # Write the merged SVG to a file
-    with open(output_file, 'w') as f:
-        ET.ElementTree(merged_svg).write(f, encoding='unicode', xml_declaration=True)
+    _write_merged_svg(output_file, merged_svg)
