@@ -1,11 +1,10 @@
-import svgwrite
-from xml.etree import ElementTree as ET
 import re
+from xml.etree import ElementTree as ET
 
 
 def parse_unit(value):
     """Parse a value with units like '91.302299mm' into pixels."""
-    match = re.match(r"([\d\.]+)(\w+)?", value)
+    match = re.match(r"([\d.]+)(\w+)?", value)
     if not match:
         raise ValueError(f"Cannot parse value: {value}")
 
@@ -70,4 +69,3 @@ def merge_svgs(output_file='merged.svg', side_by_side=True, *svg_files):
     # Write the merged SVG to a file
     with open(output_file, 'w') as f:
         ET.ElementTree(merged_svg).write(f, encoding='unicode', xml_declaration=True)
-
