@@ -1,7 +1,7 @@
 import unittest
 
 from svg_concat.file_discovery.file_census import FileCensus
-from tests.file_discovery.file_criteria.mocks.mock_criterion import MockCriterion
+from tests.file_discovery.file_criteria.mocks.mock_filter import MockFilter
 
 
 class FileCensusTests(unittest.TestCase):
@@ -29,10 +29,10 @@ class ConstructorTests(FileCensusTests):
 
     def test_file_criteria_is_value_sets_to_value(self):
         # Arrange
-        expected_result = {MockCriterion(True), MockCriterion()}
+        expected_result = {MockFilter(True), MockFilter()}
 
         # Act
-        test_census = FileCensus("test", criteria={MockCriterion(True), MockCriterion()})
+        test_census = FileCensus("test", criteria={MockFilter(True), MockFilter()})
 
         # Assert
         self.assertSetEqual(expected_result, test_census.criteria)

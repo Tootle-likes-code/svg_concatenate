@@ -1,17 +1,17 @@
 import unittest
 
-from svg_concat.file_discovery.file_criteria.name_criterion import NameCriterion
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 
 
-class NameCriterionTests(unittest.TestCase):
+class NameFilterTests(unittest.TestCase):
     def setUp(self):
         pass
 
 
-class IsValidTests(NameCriterionTests):
+class IsValidTests(NameFilterTests):
     def test_contained_name_is_passed_returns_true(self):
         # Arrange
-        test_criterion = NameCriterion(['test_name'])
+        test_criterion = NameFilter(['test_name'])
 
         # Act
         result = test_criterion.is_valid('test_name')
@@ -20,7 +20,7 @@ class IsValidTests(NameCriterionTests):
         self.assertTrue(result)
 
     def test_not_contained_name_is_passed_returns_false(self):
-        test_criterion = NameCriterion(['test_name'])
+        test_criterion = NameFilter(['test_name'])
 
         # Act
         result = test_criterion.is_valid('not_test_name')

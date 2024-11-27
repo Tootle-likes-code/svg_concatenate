@@ -1,14 +1,14 @@
 import unittest
 
-from svg_concat.file_discovery.file_criteria.file_suffix_criterion import FileSuffixCriterion
+from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 
 
-class FileSuffixCriterionTest(unittest.TestCase):
+class FileSuffixFilterTests(unittest.TestCase):
     def setUp(self):
-        self.test_criterion = FileSuffixCriterion([".svg", ".txt"])
+        self.test_criterion = FileSuffixFilter([".svg", ".txt"])
 
 
-class ConstructorTest(FileSuffixCriterionTest):
+class ConstructorTest(FileSuffixFilterTests):
     def setUp(self):
         self.file_suffixes = [".svg", " svg"]
 
@@ -17,7 +17,7 @@ class ConstructorTest(FileSuffixCriterionTest):
         expected_result = "svg"
 
         # Act
-        result = FileSuffixCriterion([" svg"])
+        result = FileSuffixFilter([" svg"])
 
         # Assert
         self.assertTrue(expected_result in result.allowed_suffixes, f"Spaces were not trimmed. {result.allowed_suffixes}")
@@ -27,7 +27,7 @@ class ConstructorTest(FileSuffixCriterionTest):
         expected_result = "svg"
 
         # Act
-        result = FileSuffixCriterion([".svg"])
+        result = FileSuffixFilter([".svg"])
 
         # Assert
         self.assertTrue(expected_result in result.allowed_suffixes, f"Dots are not trimmed. {result.allowed_suffixes}")
@@ -37,13 +37,13 @@ class ConstructorTest(FileSuffixCriterionTest):
         expected_result = {"svg"}
 
         # Act
-        result = FileSuffixCriterion(self.file_suffixes)
+        result = FileSuffixFilter(self.file_suffixes)
 
         # Assert
         self.assertSetEqual(result.allowed_suffixes, expected_result)
 
 
-class IsValidTests(FileSuffixCriterionTest):
+class IsValidTests(FileSuffixFilterTests):
     def test_returns_true_if_file_ends_with_valid_suffix(self):
         # Act
         result = self.test_criterion.is_valid("test.svg")

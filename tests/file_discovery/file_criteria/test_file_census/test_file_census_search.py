@@ -3,7 +3,7 @@ import unittest
 from svg_concat.file_discovery import census_result_builder
 from svg_concat.file_discovery.census_result_builder import CensusResultBuilder
 from svg_concat.file_discovery.file_census import FileCensus
-from svg_concat.file_discovery.file_criteria.name_criterion import NameCriterion
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from tests.file_discovery.file_criteria.test_file_census.test_file_census import FileCensusTests
 
 
@@ -60,7 +60,7 @@ class FindAllFilesTests(SearchTests):
                            .with_found_file("test_files\\Aaleah.svg", "Aaleah.svg")
                            .build())
         names = ["Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"]
-        test_criterion = NameCriterion(names)
+        test_criterion = NameFilter(names)
         test_census = FileCensus("test_files", {test_criterion})
 
         # Act

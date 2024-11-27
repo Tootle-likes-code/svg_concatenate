@@ -3,13 +3,13 @@ import os
 from svg_concat.file_discovery import census_result_builder
 from svg_concat.file_discovery.census_result import CensusResult
 from svg_concat.file_discovery.census_result_builder import CensusResultBuilder
-from svg_concat.file_discovery.file_criteria import name_criterion
-from svg_concat.file_discovery.file_criteria.criterion import Criterion
-from svg_concat.file_discovery.file_criteria.name_criterion import NameCriterion
+from svg_concat.file_discovery.file_filters import name_filter
+from svg_concat.file_discovery.file_filters.filter import Filter
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 
 
 class FileCensus:
-    def __init__(self, starting_directory: str, criteria: list[Criterion] | None = None,
+    def __init__(self, starting_directory: str, criteria: list[Filter] | None = None,
                  files_to_find: set[str] = None):
         self.starting_directory = starting_directory
 
@@ -21,7 +21,7 @@ class FileCensus:
         if files_to_find is None  and files_to_find == []:
             raise ValueError('Either files_to_find or files_to_find must be specified')
 
-        self.files_to_find: NameCriterion = name_criterion.create_criterion(files_to_find)
+        self.files_to_find: NameFilter = name_filter.create_criterion(files_to_find)
         if self.files_to_find is not None:
             self.criteria.add(self.files_to_find)
 

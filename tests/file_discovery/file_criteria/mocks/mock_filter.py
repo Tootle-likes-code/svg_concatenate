@@ -1,7 +1,7 @@
-from svg_concat.file_discovery.file_criteria.criterion import Criterion
+from svg_concat.file_discovery.file_filters.filter import Filter
 
 
-class MockCriterion(Criterion):
+class MockFilter(Filter):
     def __init__(self, result: bool = True):
         self.result = result
 
