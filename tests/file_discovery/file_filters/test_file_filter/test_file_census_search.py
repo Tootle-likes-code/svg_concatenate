@@ -4,7 +4,7 @@ from svg_concat.file_discovery import census_result_builder
 from svg_concat.file_discovery.census_result_builder import CensusResultBuilder
 from svg_concat.file_discovery.file_census import FileCensus
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
-from tests.file_discovery.file_criteria.test_file_census.test_file_census import FileCensusTests
+from tests.file_discovery.file_filters.test_file_filter.test_file_census import FileCensusTests
 
 
 @staticmethod

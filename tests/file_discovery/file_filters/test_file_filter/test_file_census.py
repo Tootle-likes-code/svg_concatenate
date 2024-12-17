@@ -1,7 +1,7 @@
 import unittest
 
 from svg_concat.file_discovery.file_census import FileCensus
-from tests.file_discovery.file_criteria.mocks.mock_filter import MockFilter
+from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
 
 
 class FileCensusTests(unittest.TestCase):

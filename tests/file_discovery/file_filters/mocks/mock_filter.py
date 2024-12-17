@@ -13,3 +13,6 @@ class MockFilter(Filter):
 
     def is_valid(self, file_name: str) -> bool:
         return self.result
+
+    def merge(self, other: 'MockFilter'):
+        pass

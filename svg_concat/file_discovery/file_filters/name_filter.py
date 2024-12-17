@@ -1,7 +1,7 @@
 from svg_concat.file_discovery.file_filters.filter import Filter
 
 
-def create_criterion(file_names):
+def create_filter(file_names):
     if file_names is None or len(file_names) == 0:
         return
 
@@ -17,3 +17,6 @@ class NameFilter(Filter):
             return True
 
         return False
+
+    def merge(self, other_filter: "Filter") -> None:
+        raise NotImplementedError("Not Implemented")

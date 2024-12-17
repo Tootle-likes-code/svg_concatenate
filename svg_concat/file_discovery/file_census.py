@@ -21,7 +21,7 @@ class FileCensus:
         if files_to_find is None  and files_to_find == []:
             raise ValueError('Either files_to_find or files_to_find must be specified')
 
-        self.files_to_find: NameFilter = name_filter.create_criterion(files_to_find)
+        self.files_to_find: NameFilter = name_filter.create_filter(files_to_find)
         if self.files_to_find is not None:
             self.criteria.add(self.files_to_find)
 

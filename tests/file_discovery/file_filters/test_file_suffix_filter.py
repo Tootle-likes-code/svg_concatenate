@@ -61,7 +61,7 @@ class IsValidTests(FileSuffixFilterTests):
 
     def test_returns_true_if_file_is_in_allowed_but_not_the_first(self):
         # Assert
-        self.assertFalse(self.test_criterion.is_valid("test.txt"))
+        self.assertTrue(self.test_criterion.is_valid("test.txt"))
 
 
 if __name__ == '__main__':
