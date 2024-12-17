@@ -14,7 +14,7 @@ class FilterFrame(tk.Frame):
 
         label = ttk.Label(self, text="Search Filters: ")
         self.list_box = tk.Listbox(self, listvariable=self.filter_names)
-        self.button = ttk.Button(self, text="Add Search Filter", padding=(5, 5))
+        self.button = ttk.Button(self, text="Add/Update\nSearch Filter", padding=(5, 5))
 
         label.grid(row=0, column=0, sticky=tk.EW, padx=10, pady=10)
         self.list_box.grid(row=1, column=0, columnspan=3, rowspan=4, sticky=tk.EW, padx=10, pady=10)

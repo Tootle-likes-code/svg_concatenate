@@ -1,4 +1,4 @@
-from typing import Protocol, Type
+from typing import Protocol
 
 from svg_concat.file_discovery import filter_factory
 from svg_concat.file_discovery.file_filters import file_suffix_filter
@@ -25,6 +25,15 @@ class FiltersModel:
     @property
     def filters(self) -> dict[type(Filter), FilterViewModel]:
         return self._models
+
+    @property
+    def file_suffixes(self) -> str:
+        found_filter: FileSuffixFilter | None = self._filters.get(FilterType.FILE_SUFFIX_FILTER, None)
+
+        if found_filter:
+            return ", ".join(found_filter.allowed_suffixes)
+        else:
+            return ""
 
     def update_filters(self):
         self._models = filter_view_model_factory.convert_all(self._filters)

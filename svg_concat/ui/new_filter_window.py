@@ -17,7 +17,12 @@ class NewFilterWindow(tk.Toplevel):
 
         self.selected_filter_type = tk.StringVar()
 
-        file_suffix_filter = NewFileSuffixFilterFrame(self, kwargs["create_filter"], kwargs["update_file_suffix_action"])
+        file_suffix_filter = NewFileSuffixFilterFrame(
+            self,
+            kwargs["create_filter"],
+            kwargs["update_file_suffix_action"],
+            kwargs["file_suffixes"]
+        )
         self._frames = {FileSuffixFilter: file_suffix_filter}
 
         label = ttk.Label(self, text="Select Criteria Type:", padding=(10, 0))
@@ -44,6 +49,8 @@ class NewFilterWindow(tk.Toplevel):
         self._show_selected_frame()
         self.focus()
         self.grab_set()
+        self.bind("<Return>", self.create_button_clicked)
+        self.bind("<KP_Enter>", self.create_button_clicked)
 
     def _show_selected_frame(self, *args):
         self._show_frame(self._selected_frame())
@@ -51,7 +58,7 @@ class NewFilterWindow(tk.Toplevel):
     def _show_frame(self, selected_frame):
         selected_frame.tkraise()
 
-    def create_button_clicked(self):
+    def create_button_clicked(self, *_):
         self._selected_frame().create_filter()
         self.destroy()
 

@@ -19,6 +19,10 @@ class AppController:
     def filters(self):
         return list(self.filter_model.filters.values())
 
+    @property
+    def file_suffixes(self):
+        return self.filter_model.file_suffixes
+
     def update_file_suffix_filter(self, file_suffix_filter: str):
         self.filter_model.update_file_suffix_filter(file_suffix_filter)
 
@@ -29,7 +33,8 @@ class AppController:
         self.new_filter_window = (
             NewFilterWindow(self.app,
                             create_filter=self.create_filter,
-                            update_file_suffix_action=self.update_file_suffix_filter)
+                            update_file_suffix_action=self.update_file_suffix_filter,
+                            file_suffixes=self.filter_model.file_suffixes)
         )
 
     def create_filter(self, filter_type: FilterType, *args):

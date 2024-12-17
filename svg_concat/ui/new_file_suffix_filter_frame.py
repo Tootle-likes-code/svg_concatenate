@@ -7,7 +7,7 @@ from svg_concat.ui.create_filter_frame import CreateFilterFrame
 
 
 class NewFileSuffixFilterFrame(CreateFilterFrame):
-    def __init__(self, master, create_filter_action, update_file_suffix_action):
+    def __init__(self, master, create_filter_action, update_file_suffix_action, existing_file_suffix=""):
         super().__init__(master)
         self.create_filter_action: Callable = create_filter_action
         self.update_file_suffix_action = update_file_suffix_action
@@ -16,6 +16,7 @@ class NewFileSuffixFilterFrame(CreateFilterFrame):
         self.rowconfigure(0, weight=1)
 
         self.name_text = tk.StringVar()
+        self.name_text.set(existing_file_suffix)
 
         label = ttk.Label(self, text="File Suffix:")
         entry = ttk.Entry(self, textvariable=self.name_text)
