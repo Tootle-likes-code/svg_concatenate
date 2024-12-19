@@ -43,7 +43,7 @@ class FileSuffixFilter(Filter):
         if not isinstance(other_filter, FileSuffixFilter):
             raise TypeError(f"{other_filter} is not a {FileSuffixFilter.__name__}")
 
-        self.allowed_suffixes = self.allowed_suffixes.union(other_filter.allowed_suffixes)
+        self.allowed_suffixes = other_filter.allowed_suffixes
 
     def __repr__(self):
         return f"FileSuffixFilter(allowed_suffixes={self.allowed_suffixes})"

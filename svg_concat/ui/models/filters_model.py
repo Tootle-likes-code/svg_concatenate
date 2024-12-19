@@ -6,6 +6,7 @@ from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffix
 from svg_concat.file_discovery.file_filters.filter import Filter
 from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
 from svg_concat.file_discovery.file_filters.filter_types import FilterType
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from svg_concat.ui.view_models import filter_view_model_factory
 from svg_concat.ui.view_models.filter_view_model import FilterViewModel
 
@@ -34,6 +35,15 @@ class FiltersModel:
             return ", ".join(found_filter.allowed_suffixes)
         else:
             return ""
+
+    @property
+    def file_names(self) -> list[str]:
+        found_filter: NameFilter | None = self._filters.get(FilterType.FILE_NAME_FILTER)
+
+        if found_filter:
+            return found_filter.names
+        else:
+            return []
 
     def update_filters(self):
         self._models = filter_view_model_factory.convert_all(self._filters)

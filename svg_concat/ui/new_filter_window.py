@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from svg_concat.ui.create_filter_frame import CreateFilterFrame
+from svg_concat.ui.new_file_name_filter_frame import NewFileNameFilterFrame
 from svg_concat.ui.new_file_suffix_filter_frame import NewFileSuffixFilterFrame
 from svg_concat.ui.view_models import filter_view_model_factory
 
@@ -23,7 +25,17 @@ class NewFilterWindow(tk.Toplevel):
             kwargs["update_file_suffix_action"],
             kwargs["file_suffixes"]
         )
-        self._frames = {FileSuffixFilter: file_suffix_filter}
+
+        file_name_filter = NewFileNameFilterFrame(
+            self,
+            kwargs["file_names"],
+            kwargs["create_filter"]
+        )
+
+        self._frames = {
+            FileSuffixFilter: file_suffix_filter,
+            NameFilter: file_name_filter
+        }
 
         label = ttk.Label(self, text="Select Criteria Type:", padding=(10, 0))
         _filter_names = [name for name in filter_view_model_factory.filter_names_to_types_mapping.keys()]
@@ -45,6 +57,7 @@ class NewFilterWindow(tk.Toplevel):
         cancel_button.grid(row=2, column=2, padx=10, pady=10, sticky=tk.E)
 
         file_suffix_filter.grid(row=1, column=0, columnspan=3, padx=(10, 0), sticky=tk.NSEW)
+        file_name_filter.grid(row=1, column=0, columnspan=3, padx=(10, 0), sticky=tk.NSEW)
 
         self._show_selected_frame()
         self.focus()
@@ -53,9 +66,7 @@ class NewFilterWindow(tk.Toplevel):
         self.bind("<KP_Enter>", self.create_button_clicked)
 
     def _show_selected_frame(self, *args):
-        self._show_frame(self._selected_frame())
-
-    def _show_frame(self, selected_frame):
+        selected_frame = self._selected_frame()
         selected_frame.tkraise()
 
     def create_button_clicked(self, *_):

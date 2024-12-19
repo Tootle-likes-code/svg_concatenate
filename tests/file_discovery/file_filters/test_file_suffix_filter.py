@@ -1,6 +1,7 @@
 import unittest
 
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
+from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
 
 
 class FileSuffixFilterTests(unittest.TestCase):
@@ -20,7 +21,8 @@ class ConstructorTest(FileSuffixFilterTests):
         result = FileSuffixFilter([" svg"])
 
         # Assert
-        self.assertTrue(expected_result in result.allowed_suffixes, f"Spaces were not trimmed. {result.allowed_suffixes}")
+        self.assertTrue(expected_result in result.allowed_suffixes,
+                        f"Spaces were not trimmed. {result.allowed_suffixes}")
 
     def test_dots_are_trimmed(self):
         # Arrange
@@ -62,6 +64,30 @@ class IsValidTests(FileSuffixFilterTests):
     def test_returns_true_if_file_is_in_allowed_but_not_the_first(self):
         # Assert
         self.assertTrue(self.test_criterion.is_valid("test.txt"))
+
+
+class MergeTests(FileSuffixFilterTests):
+    def test_replaces_previous_set(self):
+        # Arrange
+        expected_result = {"svg2", "txt2"}
+        filter_1 = FileSuffixFilter([".svg", ".txt"])
+        filter_2 = FileSuffixFilter([".svg2", ".txt2"])
+
+        # Act
+        filter_1.merge(filter_2)
+
+        # Assert
+        self.assertSetEqual(expected_result, filter_1.allowed_suffixes)
+
+    def test_raises_type_error_when_not_correct_type(self):
+        # Arrange
+        filter_1 = FileSuffixFilter([".svg", ".txt"])
+        filter_2 = MockFilter()
+
+        # Assert
+        with self.assertRaises(TypeError) as ex:
+            # Act
+            filter_1.merge(filter_2)
 
 
 if __name__ == '__main__':

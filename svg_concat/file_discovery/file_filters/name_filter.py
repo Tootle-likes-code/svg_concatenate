@@ -9,7 +9,7 @@ def create_filter(file_names):
 
 
 class NameFilter(Filter):
-    def __init__(self, names: list[str]):
+    def __init__(self, names: set[str]):
         self.names = names
 
     def is_valid(self, file_name: str) -> bool:
@@ -18,5 +18,8 @@ class NameFilter(Filter):
 
         return False
 
-    def merge(self, other_filter: "Filter") -> None:
-        raise NotImplementedError("Not Implemented")
+    def merge(self, other_filter: Filter) -> None:
+        if not isinstance(other_filter, NameFilter):
+            raise TypeError(f"{other_filter} is not a {NameFilter.__name__}")
+
+        self.names = other_filter.names

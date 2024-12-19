@@ -34,7 +34,8 @@ class AppController:
             NewFilterWindow(self.app,
                             create_filter=self.create_filter,
                             update_file_suffix_action=self.update_file_suffix_filter,
-                            file_suffixes=self.filter_model.file_suffixes)
+                            file_suffixes=self.filter_model.file_suffixes,
+                            file_names=self.filter_model.file_names)
         )
 
     def create_filter(self, filter_type: FilterType, *args):
