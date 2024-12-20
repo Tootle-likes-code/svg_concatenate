@@ -24,6 +24,8 @@ class NewFileNameFilterFrame(CreateFilterFrame):
         add_button = ttk.Button(self, text="Add", command=self._add_button_clicked)
         remove_button = ttk.Button(self, text="Remove", command=self._remove_button_clicked)
 
+        self.files_listbox.bind("<Delete>", self._remove_button_clicked)
+        self.files_listbox.bind("<BackSpace>", self._remove_button_clicked)
         self.new_name_text_field.bind("<Control-v>", self._paste_into_text_field)
 
         label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.E)
@@ -44,7 +46,7 @@ class NewFileNameFilterFrame(CreateFilterFrame):
         self.files_listbox.insert(tk.END, self.new_file_name.get())
         self.new_file_name.set("")
 
-    def _remove_button_clicked(self):
+    def _remove_button_clicked(self, _):
         for i in self.files_listbox.curselection():
             self.files_listbox.delete(i)
 
