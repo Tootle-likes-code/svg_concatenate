@@ -64,6 +64,7 @@ class NewFilterWindow(tk.Toplevel):
         self.grab_set()
         self.bind("<Return>", self.create_button_clicked)
         self.bind("<KP_Enter>", self.create_button_clicked)
+        self.bind("<Control-v>", self._paste)
 
     def _show_selected_frame(self, *args):
         selected_frame = self._selected_frame()
@@ -77,3 +78,7 @@ class NewFilterWindow(tk.Toplevel):
         selected_filter = self.selected_filter_type.get()
         filter_class = filter_view_model_factory.filter_names_to_types_mapping[selected_filter]
         return self._frames[filter_class]
+
+    def _paste(self, _):
+        selected_frame = self._selected_frame()
+        selected_frame.paste()

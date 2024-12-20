@@ -10,3 +10,7 @@ class CreateFilterFrame(ttk.Frame, ABC):
     @abstractmethod
     def create_filter(self):
         pass
+
+    @abstractmethod
+    def paste(self):
+        pass

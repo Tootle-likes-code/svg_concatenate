@@ -29,3 +29,15 @@ class NewFileSuffixFilterFrame(CreateFilterFrame):
 
     def update_file_suffix_text(self):
         self.update_file_suffix_action(self.name_text.get())
+
+    def paste(self):
+        clipboard = self.clipboard_get().split("\n")
+        clipboard = ", ".join(clipboard)
+
+        existing_text = self.name_text.get()
+        if existing_text and existing_text != "":
+            new_text = existing_text + ", " + clipboard
+        else:
+            new_text = clipboard
+
+        self.name_text.set(new_text)
