@@ -3,7 +3,7 @@ from typing import Callable
 from svg_concat.file_discovery.file_filters import file_suffix_filter, name_filter
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 from svg_concat.file_discovery.file_filters.filter import Filter
-from svg_concat.file_discovery.file_filters.filter_types import FilterType
+from svg_concat.file_discovery.filter_types import FilterType
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 
 

@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from svg_concat.file_discovery.file_filters.filter_types import FilterType
+from svg_concat.file_discovery.filter_types import FilterType
 from svg_concat.ui.create_filter_frame import CreateFilterFrame
 
 

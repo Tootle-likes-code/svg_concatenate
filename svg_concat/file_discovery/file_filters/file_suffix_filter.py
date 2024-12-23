@@ -7,7 +7,7 @@ def create_from_csv(text: str) -> "FileSuffixFilter":
 
 
 def _clean_suffixes(suffixes: str | list[str]) -> set[str]:
-    if suffixes is str:
+    if isinstance(suffixes, str):
         return {suffixes}
 
     clean_suffixes: set[str] = set()
@@ -26,6 +26,19 @@ def _clean_suffixes(suffixes: str | list[str]) -> set[str]:
 class FileSuffixFilter(Filter):
     def __init__(self, suffix_list: str | list[str]):
         self.allowed_suffixes = _clean_suffixes(suffix_list)
+
+    @classmethod
+    def create_dummy_instance(cls) -> "FileSuffixFilter":
+        return FileSuffixFilter(".svg")
+
+    def __eq__(self, other):
+        if not isinstance(other, FileSuffixFilter):
+            return False
+
+        return self.allowed_suffixes == other.allowed_suffixes
+
+    def __hash__(self):
+        return hash(frozenset(self.allowed_suffixes))
 
     def is_valid(self, file_name: str) -> bool:
         for suffix in self.allowed_suffixes:

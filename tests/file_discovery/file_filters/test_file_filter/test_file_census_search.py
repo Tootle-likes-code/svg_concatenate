@@ -29,7 +29,7 @@ class SearchTests(FileCensusTests):
 
 
 class FindAllFilesTests(SearchTests):
-    def test_no_criteria_census_result_for_every_file(self):
+    def test_no_filter_census_result_for_every_file(self):
         # Arrange
         expected_result = create_result_with_all_files_found()
         test_census = FileCensus("test_files")
@@ -40,7 +40,7 @@ class FindAllFilesTests(SearchTests):
         # Assert
         self.assertSetEqual(expected_result.found_files, results.found_files)
 
-    def test_no_criteria_census_no_missing_files(self):
+    def test_no_filter_census_no_missing_files(self):
         # Arrange
         test_census = FileCensus("test_files")
 
@@ -50,7 +50,7 @@ class FindAllFilesTests(SearchTests):
         # Assert
         self.assertSetEqual(set(), result.missing_files)
 
-    def test_file_criteria_census_all_found_files(self):
+    def test_file_filter_census_all_found_files(self):
         # Assert
         expected_result = (census_result_builder.create_census_result()
                            .with_found_file("test_files\\Sub folder\\Aaden.svg", "Aaden.svg")
@@ -59,9 +59,9 @@ class FindAllFilesTests(SearchTests):
                            .with_found_file("test_files\\test1.txt", "test1.txt")
                            .with_found_file("test_files\\Aaleah.svg", "Aaleah.svg")
                            .build())
-        names = ["Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"]
-        test_criterion = NameFilter(names)
-        test_census = FileCensus("test_files", {test_criterion})
+        names = {"Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"}
+        test_filter = NameFilter(names)
+        test_census = FileCensus("test_files", {test_filter})
 
         # Act
         result = test_census.search_directory()
@@ -69,7 +69,7 @@ class FindAllFilesTests(SearchTests):
         # Assert
         self.assertSetEqual(expected_result.found_files, result.found_files)
 
-    def test_file_criteria_census_some_missing_files(self):
+    def test_file_filter_census_some_missing_files(self):
         # Arrange
         expected_result = (census_result_builder.create_census_result()
                            .with_missing_file("new.txt")

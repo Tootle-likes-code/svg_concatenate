@@ -1,4 +1,4 @@
-from svg_concat.file_discovery.file_filters.filter_types import FilterType
+from svg_concat.file_discovery.filter_types import FilterType
 from svg_concat.ui.app import App
 from svg_concat.ui.models.filters_model import FiltersModel
 from svg_concat.ui.new_filter_window import NewFilterWindow

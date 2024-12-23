@@ -6,7 +6,7 @@ from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
 
 class FileSuffixFilterTests(unittest.TestCase):
     def setUp(self):
-        self.test_criterion = FileSuffixFilter([".svg", ".txt"])
+        self.test_filter = FileSuffixFilter([".svg", ".txt"])
 
 
 class ConstructorTest(FileSuffixFilterTests):
@@ -48,22 +48,22 @@ class ConstructorTest(FileSuffixFilterTests):
 class IsValidTests(FileSuffixFilterTests):
     def test_returns_true_if_file_ends_with_valid_suffix(self):
         # Act
-        result = self.test_criterion.is_valid("test.svg")
+        result = self.test_filter.is_valid("test.svg")
 
         # Assert
         self.assertTrue(result)
 
     def test_returns_false_if_file_does_not_use_suffix(self):
         # Assert
-        self.assertFalse(self.test_criterion.is_valid("test.png"))
+        self.assertFalse(self.test_filter.is_valid("test.png"))
 
     def test_does_not_return_none_if_file_does_not_use_suffix(self):
         # Assert
-        self.assertIsNotNone(self.test_criterion.is_valid("test.png"))
+        self.assertIsNotNone(self.test_filter.is_valid("test.png"))
 
     def test_returns_true_if_file_is_in_allowed_but_not_the_first(self):
         # Assert
-        self.assertTrue(self.test_criterion.is_valid("test.txt"))
+        self.assertTrue(self.test_filter.is_valid("test.txt"))
 
 
 class MergeTests(FileSuffixFilterTests):

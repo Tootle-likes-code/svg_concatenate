@@ -5,7 +5,7 @@ from svg_concat.file_discovery.file_filters import file_suffix_filter
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 from svg_concat.file_discovery.file_filters.filter import Filter
 from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
-from svg_concat.file_discovery.file_filters.filter_types import FilterType
+from svg_concat.file_discovery.filter_types import FilterType
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from svg_concat.ui.view_models import filter_view_model_factory
 from svg_concat.ui.view_models.filter_view_model import FilterViewModel
@@ -29,7 +29,7 @@ class FiltersModel:
 
     @property
     def file_suffixes(self) -> str:
-        found_filter: FileSuffixFilter | None = self._filters.get(FilterType.FILE_SUFFIX_FILTER, None)
+        found_filter: FileSuffixFilter | None = self._filters.get(FileSuffixFilter, None)
 
         if found_filter:
             return ", ".join(found_filter.allowed_suffixes)
@@ -38,10 +38,10 @@ class FiltersModel:
 
     @property
     def file_names(self) -> list[str]:
-        found_filter: NameFilter | None = self._filters.get(FilterType.FILE_NAME_FILTER)
+        found_filter: NameFilter | None = self._filters.get(NameFilter, None)
 
         if found_filter:
-            return found_filter.names
+            return list(found_filter.names)
         else:
             return []
 
@@ -58,7 +58,7 @@ class FiltersModel:
     def create_filter(self, filter_type: FilterType, *args) -> None:
         new_filter = filter_factory.create(filter_type, *args)
 
-        self._filters.upsert(filter_type, new_filter)
+        self._filters.upsert(new_filter)
         self.publish_changes()
 
     def update_file_suffix_filter(self, filter_string: str) -> None:

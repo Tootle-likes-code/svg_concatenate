@@ -12,6 +12,18 @@ class NameFilter(Filter):
     def __init__(self, names: set[str]):
         self.names = names
 
+    @classmethod
+    def create_dummy_instance(cls):
+        return NameFilter(set())
+
+    def __eq__(self, other):
+        if not isinstance(other, NameFilter):
+            return False
+        return self.names == other.names
+
+    def __hash__(self):
+        return hash(frozenset(self.names))
+
     def is_valid(self, file_name: str) -> bool:
         if file_name in self.names:
             return True
