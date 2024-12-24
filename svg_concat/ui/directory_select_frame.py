@@ -9,6 +9,8 @@ class DirectorySelectFrame(ttk.Frame):
     def __init__(self, master, label_text: str):
         super().__init__(master)
 
+        self.columnconfigure(1, weight=1)
+
         self.selected_file_path = tk.StringVar()
         self.selected_file_path.set("")
 
