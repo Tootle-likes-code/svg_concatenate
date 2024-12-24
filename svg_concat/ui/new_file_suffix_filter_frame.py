@@ -3,6 +3,7 @@ from tkinter import ttk
 from typing import Callable
 
 from svg_concat.file_discovery.filter_types import FilterType
+from svg_concat.ui import shared
 from svg_concat.ui.create_filter_frame import CreateFilterFrame
 
 
@@ -21,8 +22,8 @@ class NewFileSuffixFilterFrame(CreateFilterFrame):
         label = ttk.Label(self, text="File Suffix:")
         entry = ttk.Entry(self, textvariable=self.name_text)
 
-        label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.EW)
-        entry.grid(row=0, column=1, padx=10, pady=10, sticky=tk.EW)
+        label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky="NEW")
+        entry.grid(row=0, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky="NEW")
 
     def create_filter(self):
         self.create_filter_action(FilterType.FILE_SUFFIX_FILTER, self.name_text.get())

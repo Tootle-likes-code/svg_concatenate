@@ -2,7 +2,10 @@ from svg_concat.file_discovery.file_filters.filter import Filter
 
 
 def create_from_csv(text: str) -> "FileSuffixFilter":
-    values = text.split(",")
+    if "," in text:
+        values = text.split(",")
+    else:
+        values = text
     return FileSuffixFilter(values)
 
 

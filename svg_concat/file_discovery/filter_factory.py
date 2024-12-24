@@ -3,8 +3,9 @@ from typing import Callable
 from svg_concat.file_discovery.file_filters import file_suffix_filter, name_filter
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 from svg_concat.file_discovery.file_filters.filter import Filter
-from svg_concat.file_discovery.filter_types import FilterType
+from svg_concat.file_discovery.file_filters.inverse_filter import InverseFilter
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
+from svg_concat.file_discovery.filter_types import FilterType
 
 
 def _create_file_suffix_filter(*args) -> FileSuffixFilter:
@@ -26,3 +27,8 @@ _FILTER_CREATE: dict[FilterType, Callable] = {
 def create(filter_type: FilterType, *args) -> Filter:
     created_filter = _FILTER_CREATE[filter_type](*args)
     return created_filter
+
+
+def create_inverted_filter(inverted_filter_type: FilterType, *args) -> Filter:
+    filter_for_inversion = create(inverted_filter_type, *args)
+    return InverseFilter(filter_for_inversion)

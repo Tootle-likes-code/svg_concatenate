@@ -21,7 +21,6 @@ class FiltersModel:
         self._filters: FilterCollection = FilterCollection()
         self.filters_observers: set[FiltersSubscriber] = set()
         self._models: dict[type(Filter), FilterViewModel] = {}
-        self.subscribe_to_changes(self)
 
     @property
     def filters(self) -> dict[type(Filter), FilterViewModel]:
@@ -52,11 +51,18 @@ class FiltersModel:
         self.filters_observers.add(callback)
 
     def publish_changes(self):
+        self.update_filters()
         for callback in self.filters_observers:
             callback.update_filters()
 
     def create_filter(self, filter_type: FilterType, *args) -> None:
         new_filter = filter_factory.create(filter_type, *args)
+
+        self._filters.upsert(new_filter)
+        self.publish_changes()
+
+    def create_inverted_filter(self, inverted_filter_type: FilterType, *args) -> None:
+        new_filter = filter_factory.create_inverted_filter(inverted_filter_type, *args)
 
         self._filters.upsert(new_filter)
         self.publish_changes()

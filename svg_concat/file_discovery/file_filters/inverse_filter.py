@@ -2,8 +2,8 @@ from svg_concat.file_discovery.file_filters.filter import Filter
 
 
 class InverseFilter(Filter):
-    def __init__(self, base_criterion: Filter):
-        self.base_criterion = base_criterion
+    def __init__(self, base_filter: Filter):
+        self.base_filter = base_filter
 
     @classmethod
     def create_dummy_instance(cls):
@@ -13,10 +13,13 @@ class InverseFilter(Filter):
         if not isinstance(other, InverseFilter):
             return False
 
-        return self.base_criterion == other.base_criterion
+        return self.base_filter == other.base_filter
+
+    def __hash__(self):
+        return hash(self.base_filter)
 
     def is_valid(self, file_name: str) -> bool:
-        return not self.base_criterion.is_valid(file_name)
+        return not self.base_filter.is_valid(file_name)
 
     def merge(self, other_filter: "Filter") -> None:
         raise NotImplementedError("Not Implemented")
