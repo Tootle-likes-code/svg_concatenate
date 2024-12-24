@@ -28,15 +28,16 @@ class NewNameFilterFrame(CreateFilterFrame):
         self.files_listbox.bind("<Delete>", self._remove_button_clicked)
         self.files_listbox.bind("<BackSpace>", self._remove_button_clicked)
         self.new_name_text_field.bind("<Control-v>", self._paste_into_text_field)
+        self.new_name_text_field.bind("<Return>", self._new_name_text_field_enter_clicked)
 
-        label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
-        self.files_listbox.grid(row=1, column=0, columnspan=4, rowspan=4, padx=shared.X_PADDING,
-                                pady=shared.Y_PADDING, sticky=tk.EW)
-        new_name_label.grid(row=5, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
+        label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.NE)
+        self.files_listbox.grid(row=1, column=0, columnspan=4, rowspan=5, padx=shared.X_PADDING,
+                                pady=shared.Y_PADDING, sticky="NEW")
+        new_name_label.grid(row=5, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky="NEW")
         self.new_name_text_field.grid(row=5, column=1, columnspan=3, padx=shared.X_PADDING,
-                                      pady=shared.Y_PADDING, sticky=tk.EW)
-        add_button.grid(row=6, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.W)
-        remove_button.grid(row=6, column=3, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.W)
+                                      pady=shared.Y_PADDING, sticky="NEW")
+        add_button.grid(row=6, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.NW)
+        remove_button.grid(row=6, column=3, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.NW)
 
     def _generate_listbox(self, list):
         for item in list:
@@ -64,4 +65,8 @@ class NewNameFilterFrame(CreateFilterFrame):
     def _paste_into_text_field(self, _):
         clipboard = self.clipboard_get()
         self.new_file_name.set(clipboard)
+        return "break"
+
+    def _new_name_text_field_enter_clicked(self, _):
+        self._add_button_clicked()
         return "break"
