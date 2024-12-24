@@ -18,11 +18,11 @@ class DirectorySelectFrame(ttk.Frame):
         self.selected_file_path.trace_add("write", self.path_updated)
 
         label = ttk.Label(self, text=f"{label_text}:")
-        entry = ttk.Entry(self, textvariable=self.selected_file_path)
+        self.selected_file_path_entry = ttk.Entry(self, textvariable=self.selected_file_path)
         open_button = ttk.Button(self, text="Select File", command=self._select_file, padding=5)
 
         label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.W)
-        entry.grid(row=0, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
+        self.selected_file_path_entry.grid(row=0, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
         open_button.grid(row=0, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
 
     def _select_file(self):
@@ -30,6 +30,9 @@ class DirectorySelectFrame(ttk.Frame):
 
         if filepath:
             self.selected_file_path.set(filepath)
+
+        self.selected_file_path_entry.icursor(tk.END)
+        self.selected_file_path_entry.xview_moveto(1)
 
     def path_updated(self, *_):
         self.update_callback(self.selected_file_path.get())
