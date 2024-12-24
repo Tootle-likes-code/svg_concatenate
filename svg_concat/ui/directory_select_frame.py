@@ -1,18 +1,21 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
+from typing import Callable
 
 from svg_concat.ui import shared
 
 
 class DirectorySelectFrame(ttk.Frame):
-    def __init__(self, master, label_text: str):
+    def __init__(self, master, label_text: str, update_callback: Callable):
         super().__init__(master)
+        self.update_callback: Callable = update_callback
 
         self.columnconfigure(1, weight=1)
 
         self.selected_file_path = tk.StringVar()
         self.selected_file_path.set("")
+        self.selected_file_path.trace_add("write", self.path_updated)
 
         label = ttk.Label(self, text=f"{label_text}:")
         entry = ttk.Entry(self, textvariable=self.selected_file_path)
@@ -27,3 +30,6 @@ class DirectorySelectFrame(ttk.Frame):
 
         if filepath:
             self.selected_file_path.set(filepath)
+
+    def path_updated(self, *_):
+        self.update_callback(self.selected_file_path.get())

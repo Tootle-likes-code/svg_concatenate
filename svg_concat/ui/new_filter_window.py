@@ -65,7 +65,10 @@ class NewFilterWindow(tk.Toplevel):
 
         label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING)
         filter_combo.grid(row=0, column=1, columnspan=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
-        separator.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky=tk.EW)
+
+        separator.grid(row=1, column=0, columnspan=3,
+                       padx=shared.SEPARATOR_PADDING, pady=shared.SEPARATOR_PADDING, sticky=tk.EW)
+
         create_button.grid(row=3, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
         cancel_button.grid(row=3, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
 
@@ -83,7 +86,7 @@ class NewFilterWindow(tk.Toplevel):
         self.bind("<KP_Enter>", self.create_button_clicked)
         self.bind("<Control-v>", self._paste)
 
-    def _show_selected_frame(self, *args):
+    def _show_selected_frame(self, *_):
         selected_frame = self._selected_frame()
         selected_frame.tkraise()
 

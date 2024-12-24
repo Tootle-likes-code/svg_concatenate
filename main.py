@@ -7,8 +7,9 @@ from svg_concat.ui.windows import set_dpi_awareness
 def main():
     filter_service = FiltersModel()
     set_dpi_awareness()
-    app = App()
-    controller = AppController(filter_service, app)
+    controller = AppController(filter_service)
+    controller.create_app()
+    app = controller.app
     app.mainloop()
 
 
