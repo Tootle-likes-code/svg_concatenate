@@ -49,10 +49,10 @@ class NewInverseFilterFrame(CreateFilterFrame):
 
         drop_down_label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
         filter_combo.grid(row=0, column=1, columnspan=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.EW)
-        file_suffix_filter_frame.grid(row=1, column=0, columnspan=3, padx=shared.X_PADDING,
-                                      pady=shared.Y_PADDING, sticky=tk.NSEW)
-        name_filter_frame.grid(row=1, column=0, columnspan=3, padx=shared.X_PADDING, pady=shared.Y_PADDING,
-                               sticky=tk.NSEW)
+        file_suffix_filter_frame.grid(row=1, column=0, columnspan=3, padx=shared.INTERIOR_PADDING,
+                                      pady=shared.INTERIOR_PADDING, sticky=tk.NSEW)
+        name_filter_frame.grid(row=1, column=0, columnspan=3,
+                               padx=shared.INTERIOR_PADDING, pady=shared.INTERIOR_PADDING, sticky=tk.NSEW)
 
         self._show_selected_frame(None)
 

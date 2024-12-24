@@ -47,7 +47,7 @@ class NewFilterWindow(tk.Toplevel):
             InverseFilter: inverse_filter_frame
         }
 
-        label = ttk.Label(self, text="Select Filter Type:", padding=(shared.X_PADDING, shared.Y_PADDING))
+        label = ttk.Label(self, text="Select Filter Type:")
         filter_names = [name for name in filter_view_model_factory.filter_names_to_types_mapping.keys()]
         filter_combo = ttk.Combobox(
             self,
@@ -58,17 +58,23 @@ class NewFilterWindow(tk.Toplevel):
         filter_combo.bind("<<ComboboxSelected>>", self._show_selected_frame)
         self.selected_filter_type.set(filter_names[0])
 
+        separator = ttk.Separator(self, orient=tk.HORIZONTAL)
+
         create_button = ttk.Button(self, text="Create", command=self.create_button_clicked)
         cancel_button = ttk.Button(self, text="Cancel", command=self.destroy)
 
         label.grid(row=0, column=0, padx=shared.X_PADDING, pady=shared.Y_PADDING)
         filter_combo.grid(row=0, column=1, columnspan=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
-        create_button.grid(row=2, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
-        cancel_button.grid(row=2, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
+        separator.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky=tk.EW)
+        create_button.grid(row=3, column=1, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
+        cancel_button.grid(row=3, column=2, padx=shared.X_PADDING, pady=shared.Y_PADDING, sticky=tk.E)
 
-        file_suffix_filter.grid(row=1, column=0, columnspan=3, padx=(0, 0), sticky=tk.NSEW)
-        file_name_filter.grid(row=1, column=0, columnspan=3, padx=(0, 0), sticky=tk.NSEW)
-        inverse_filter_frame.grid(row=1, column=0, columnspan=3, padx=(0, 0), sticky=tk.NSEW)
+        file_suffix_filter.grid(row=2, column=0, columnspan=3, sticky=tk.NSEW,
+                                padx=shared.INTERIOR_PADDING, pady=shared.INTERIOR_PADDING)
+        file_name_filter.grid(row=2, column=0, columnspan=3, sticky=tk.NSEW,
+                              padx=shared.INTERIOR_PADDING, pady=shared.INTERIOR_PADDING)
+        inverse_filter_frame.grid(row=2, column=0, columnspan=3, sticky=tk.NSEW,
+                                  padx=shared.INTERIOR_PADDING, pady=shared.INTERIOR_PADDING)
 
         self._show_selected_frame()
         self.focus()
