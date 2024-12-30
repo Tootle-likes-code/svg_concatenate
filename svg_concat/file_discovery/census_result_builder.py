@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from svg_concat.file_discovery.census_result import CensusResult
 from svg_concat.file_discovery.censused_file import CensusedFile
 
@@ -15,7 +17,8 @@ class CensusResultBuilder:
         return CensusResult(found_files=self.found_files, missing_files=self.missing_files)
 
     def with_found_file(self, file_path: str, file_name: str) -> "CensusResultBuilder":
-        self.found_files.add(CensusedFile(name=file_name, path=file_path))
+        path = Path(file_path)
+        self.found_files.add(CensusedFile(name=file_name, path=path))
         return self
 
     def with_censused_file(self, censused_file: CensusedFile) -> "CensusResultBuilder":

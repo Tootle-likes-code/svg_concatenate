@@ -3,27 +3,32 @@ import os
 from svg_concat.file_discovery import census_result_builder
 from svg_concat.file_discovery.census_result import CensusResult
 from svg_concat.file_discovery.census_result_builder import CensusResultBuilder
-from svg_concat.file_discovery.file_criteria import name_criterion
-from svg_concat.file_discovery.file_criteria.criterion import Criterion
-from svg_concat.file_discovery.file_criteria.name_criterion import NameCriterion
+from svg_concat.file_discovery.file_filters import name_filter
+from svg_concat.file_discovery.file_filters.filter import Filter
+from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 
 
 class FileCensus:
-    def __init__(self, starting_directory: str, criteria: list[Criterion] | None = None,
+    def __init__(self, starting_directory: str, filters: list[Filter] | FilterCollection | None = None,
                  files_to_find: set[str] = None):
         self.starting_directory = starting_directory
 
-        if criteria is None:
-            self.criteria = set()
+        if filters is None:
+            self.filters = set()
+        elif isinstance(filters, FilterCollection):
+            self.filters = filters.values()
+            if files_to_find is None and filters.names_filter is not None:
+                self.files_to_find = filters.names_filter.names
         else:
-            self.criteria = criteria
+            self.filters = filters
 
-        if files_to_find is None  and files_to_find == []:
+        if files_to_find is None and files_to_find == []:
             raise ValueError('Either files_to_find or files_to_find must be specified')
 
-        self.files_to_find: NameCriterion = name_criterion.create_criterion(files_to_find)
+        self.files_to_find: NameFilter = name_filter.create_filter(files_to_find)
         if self.files_to_find is not None:
-            self.criteria.add(self.files_to_find)
+            self.filters.add(self.files_to_find)
 
     def search_directory(self) -> CensusResult:
         search_result_builder = census_result_builder.create_census_result()
@@ -43,7 +48,7 @@ class FileCensus:
             search_result_builder.with_found_file(full_path, file_name)
 
     def _check_file_is_valid(self, file: str) -> bool:
-        for criteria in self.criteria:
+        for criteria in self.filters:
             if not criteria.is_valid(file):
                 return False
 

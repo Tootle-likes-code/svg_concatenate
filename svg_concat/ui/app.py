@@ -1,28 +1,63 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 
-from svg_concat.ui.criteria_selction_frame import CriteriaSelectionFrame
-from svg_concat.ui.input_folder_frame import InputFolderFrame
+from svg_concat.ui import shared
+from svg_concat.ui.directory_select_frame import DirectorySelectFrame
+from svg_concat.ui.filter_frame import FilterFrame
+from svg_concat.ui.output_frame import OutputFrame
+from svg_concat.ui.report_section_frame import ReportSectionFrame
 
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)
+class App(tk.Tk):
+    def __init__(self, save_config_command, load_config_command, **kwargs):
+        super().__init__()
 
-        top = self.winfo_toplevel()
-        top.columnconfigure(0, weight=1, minsize=400)
-        top.rowconfigure(0, weight=1, minsize=400)
+        self.title('SVG Concatenate')
 
-        self.columnconfigure(0, weight=1)
-        self.rowconfigure(0, weight=1)
+        menubar = tk.Menu(self)
+        file_menu = tk.Menu(menubar, tearoff=0)
+        file_menu.add_command(label="Save Config", command=save_config_command)
+        file_menu.add_command(label="Load Config", command=load_config_command)
 
-        self.grid(sticky=tk.NW)
+        menubar.add_cascade(label="File", menu=file_menu)
 
-        self._createWidgets()
+        self.directory_to_search_frame = (
+            DirectorySelectFrame(self, "Directory to Search", kwargs["initial_directory_listener"]))
+        self.filter_frame = FilterFrame(self, kwargs["new_filter"])
+        self.directory_to_output = OutputFrame(
+            self,
+            kwargs["output_directory_listener"],
+            kwargs["svg_output_listener"],
+            kwargs["report_output_listener"]
+        )
+        self.run_button = ttk.Button(self, text="Concatenate", command=kwargs["run_button_action"],
+                                     padding=shared.X_PADDING, state=tk.DISABLED)
+        separator = ttk.Separator(self)
+        self.report_section = ReportSectionFrame(self)
 
-    def _createWidgets(self):
-        self.input_folder_frame = InputFolderFrame(self)
-        self.input_folder_frame.grid(row=0, column=0, sticky=tk.E+tk.W)
+        self.directory_to_search_frame.pack(side=tk.TOP, fill=tk.X, anchor=tk.E)
+        self.filter_frame.pack(side=tk.TOP, fill=tk.X, anchor=tk.E)
+        self.directory_to_output.pack(side=tk.TOP, fill=tk.X)
+        self.run_button.pack(side=tk.TOP, anchor=tk.E, padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        separator.pack(side=tk.TOP, fill=tk.X, anchor=tk.E,
+                       padx=shared.SEPARATOR_PADDING, pady=shared.SEPARATOR_PADDING)
+        self.report_section.pack(side=tk.TOP, fill=tk.BOTH, anchor=tk.E)
 
-        self.criteria_selection_frame = CriteriaSelectionFrame(self)
-        self.criteria_selection_frame.grid(row=1, column=0, sticky=tk.E+tk.W)
+        self.config(menu=menubar)
+        self.directory_to_search_frame.bind()
 
+    def update_filters(self, filters):
+        self.filter_frame.update_filters(filters)
+
+    def update_run_button_state(self, enabled: bool):
+        if enabled:
+            self.run_button.config(state=tk.NORMAL)
+        else:
+            self.run_button.config(state=tk.DISABLED)
+
+    def update_ui(self, initial_directory, output_directory, svg_file, report_file):
+        self.directory_to_search_frame.update_text(initial_directory)
+        self.directory_to_output.update_ui(output_directory, svg_file, report_file)
+
+    def update_report(self, is_success, is_fatal, messages):
+        self.report_section.update_report(is_success, is_fatal, messages)
