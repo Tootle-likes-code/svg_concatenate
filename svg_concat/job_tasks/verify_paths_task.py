@@ -31,6 +31,8 @@ class VerifyPathsTask(JobTask):
         self._check_svg_parent_directory_is_writeable(job_result)
         self._check_report_parent_directory_is_writeable(job_result)
 
+        if self.next is None:
+            return job_result
         return self.next.perform_task(job_result)
 
     def _check_merge_config_is_valid(self, job_result: JobResult):

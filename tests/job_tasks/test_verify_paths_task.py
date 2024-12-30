@@ -31,7 +31,7 @@ class PerformTaskTests(VerifyPathTaskTests):
         print(f"Folder '{cls.test_files}' created.")
 
         cls.folder = Path(config["read_only_folder"])
-        cls.folder.mkdir(mode=stat.S_IREAD, exist_ok=True)
+        cls.folder.mkdir(exist_ok=True)
         cls.folder.chmod(stat.S_IREAD)
         print(f"Folder '{cls.folder}' created and set to read-only mode.")
 

@@ -12,6 +12,7 @@ def create() -> "MergeConfigBuilder":
 class MergeConfigBuilder:
     def __init__(self):
         self._initial_directory = Path("")
+        self._output_directory = Path("")
         self._svg_file = Path("")
         self._report_file = Path("")
         self._filters = FilterCollection()
@@ -19,6 +20,7 @@ class MergeConfigBuilder:
     def build(self) -> MergeConfig:
         return MergeConfig(
             self._initial_directory,
+            self._output_directory,
             self._svg_file,
             self._report_file,
             self._filters
@@ -28,6 +30,12 @@ class MergeConfigBuilder:
         if isinstance(initial_directory, str):
             initial_directory = Path(initial_directory)
         self._initial_directory = initial_directory
+        return self
+
+    def with_output_directory(self, output_directory: str | Path) -> "MergeConfigBuilder":
+        if isinstance(output_directory, str):
+            output_directory = Path(output_directory)
+        self._output_directory = output_directory
         return self
 
     def with_svg_file(self, svg_file: str | Path) -> "MergeConfigBuilder":

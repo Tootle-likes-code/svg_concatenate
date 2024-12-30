@@ -24,3 +24,6 @@ class MockFilter(Filter):
 
     def merge(self, other: 'MockFilter'):
         pass
+
+    def to_json(self) -> str:
+        pass
