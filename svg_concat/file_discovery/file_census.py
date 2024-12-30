@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from svg_concat.file_discovery import census_result_builder
 from svg_concat.file_discovery.census_result import CensusResult
@@ -28,7 +29,7 @@ class FileCensus:
 
         self.files_to_find: NameFilter = name_filter.create_filter(files_to_find)
         if self.files_to_find is not None:
-            self.filters.add(self.files_to_find)
+            self.filters.append(self.files_to_find)
 
     def search_directory(self) -> CensusResult:
         search_result_builder = census_result_builder.create_census_result()
@@ -41,13 +42,14 @@ class FileCensus:
         return search_result_builder.build()
 
     def _add_files(self, path, files, search_result_builder: CensusResultBuilder):
+        directory_path = Path(path)
         for file_name in files:
-            if not self._check_file_is_valid(file_name):
+            file_path = directory_path.joinpath(file_name)
+            if not self._check_file_is_valid(file_path):
                 continue
-            full_path = os.path.join(path, file_name)
-            search_result_builder.with_found_file(full_path, file_name)
+            search_result_builder.with_found_file(file_path)
 
-    def _check_file_is_valid(self, file: str) -> bool:
+    def _check_file_is_valid(self, file: Path) -> bool:
         for criteria in self.filters:
             if not criteria.is_valid(file):
                 return False

@@ -16,9 +16,8 @@ class CensusResultBuilder:
     def build(self) -> CensusResult:
         return CensusResult(found_files=self.found_files, missing_files=self.missing_files)
 
-    def with_found_file(self, file_path: str, file_name: str) -> "CensusResultBuilder":
-        path = Path(file_path)
-        self.found_files.add(CensusedFile(name=file_name, path=path))
+    def with_found_file(self, file_path: Path) -> "CensusResultBuilder":
+        self.found_files.add(CensusedFile(name=file_path.stem, path=file_path))
         return self
 
     def with_censused_file(self, censused_file: CensusedFile) -> "CensusResultBuilder":
@@ -30,4 +29,4 @@ class CensusResultBuilder:
         return self
 
     def has_found_file(self, file_name: str) -> bool:
-        return file_name in self.found_files
+        return file_name in [found_file.name for found_file in self.found_files]

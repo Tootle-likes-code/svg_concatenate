@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from svg_concat.file_discovery.file_filters.filter import Filter
 
 
@@ -18,7 +20,7 @@ class InverseFilter(Filter):
     def __hash__(self):
         return hash(self.base_filter)
 
-    def is_valid(self, file_name: str) -> bool:
+    def is_valid(self, file_name: Path) -> bool:
         return not self.base_filter.is_valid(file_name)
 
     def merge(self, other_filter: "Filter") -> None:

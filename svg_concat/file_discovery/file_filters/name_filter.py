@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from svg_concat.file_discovery.file_filters.filter import Filter
 
 
@@ -24,8 +26,8 @@ class NameFilter(Filter):
     def __hash__(self):
         return hash(frozenset(self.names))
 
-    def is_valid(self, file_name: str) -> bool:
-        if file_name in self.names:
+    def is_valid(self, file_name: Path) -> bool:
+        if file_name.name in self.names or file_name.stem in self.names:
             return True
 
         return False

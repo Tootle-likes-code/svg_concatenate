@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from svg_concat.file_discovery.file_filters.filter import Filter
 
 
@@ -43,9 +45,9 @@ class FileSuffixFilter(Filter):
     def __hash__(self):
         return hash(frozenset(self.allowed_suffixes))
 
-    def is_valid(self, file_name: str) -> bool:
+    def is_valid(self, file_path: Path) -> bool:
         for suffix in self.allowed_suffixes:
-            if file_name.endswith(suffix):
+            if file_path.suffix in [suffix, f".{suffix}"]:
                 return True
         return False
 

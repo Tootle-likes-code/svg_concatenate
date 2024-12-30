@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from pathlib import Path
 
 
 class Filter(ABC):
@@ -12,7 +13,7 @@ class Filter(ABC):
         pass
 
     @abstractmethod
-    def is_valid(self, file_name: str) -> bool:
+    def is_valid(self, file_name: Path) -> bool:
         pass
 
     @abstractmethod
