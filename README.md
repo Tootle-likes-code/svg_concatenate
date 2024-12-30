@@ -132,3 +132,7 @@ When ready, click the `Create` button as normal.
 > #### In Short
 > This filter asks you to make another filter and then just flips the result of the check.  When using it, just think
 > 'Filter this if it's NOT ___'
+
+## Config
+
+You can save a config by going `File` -> `Save Config`.  You can reload a config by selecting `File` -> `Load Config`.
