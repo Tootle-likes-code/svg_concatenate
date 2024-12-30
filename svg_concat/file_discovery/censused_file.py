@@ -12,3 +12,9 @@ class CensusedFile:
 
     def __hash__(self):
         return hash(self.path)
+
+    @property
+    def full_path(self):
+        return self.path.joinpath(self.name)
+
+

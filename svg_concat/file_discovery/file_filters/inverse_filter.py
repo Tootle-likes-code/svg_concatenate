@@ -23,3 +23,8 @@ class InverseFilter(Filter):
 
     def merge(self, other_filter: "Filter") -> None:
         raise NotImplementedError("Not Implemented")
+
+    def to_json(self):
+        return {
+            "inverted_filter": self.base_filter.to_json()
+        }

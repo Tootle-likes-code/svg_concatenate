@@ -18,3 +18,7 @@ class Filter(ABC):
     @abstractmethod
     def merge(self, other_filter: "Filter") -> None:
         pass
+
+    @abstractmethod
+    def to_json(self) -> dict:
+        pass

@@ -64,3 +64,8 @@ class FileSuffixFilter(Filter):
     def __repr__(self):
         return f"FileSuffixFilter(allowed_suffixes={self.allowed_suffixes})"
 
+    def to_json(self) -> dict:
+        return {
+            "allowed_suffixes": list(self.allowed_suffixes),
+        }
+

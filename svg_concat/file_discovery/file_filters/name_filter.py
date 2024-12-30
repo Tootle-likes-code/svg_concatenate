@@ -35,3 +35,8 @@ class NameFilter(Filter):
             raise TypeError(f"{other_filter} is not a {NameFilter.__name__}")
 
         self.names = other_filter.names
+
+    def to_json(self) -> dict:
+        return {
+            "names": list(self.names),
+        }

@@ -44,6 +44,14 @@ class FiltersModel:
         else:
             return []
 
+    def get(self) -> FilterCollection:
+        return self._filters
+
+    def set(self, filters: FilterCollection):
+        self._filters = filters
+
+        self.publish_changes()
+
     def update_filters(self):
         self._models = filter_view_model_factory.convert_all(self._filters)
 

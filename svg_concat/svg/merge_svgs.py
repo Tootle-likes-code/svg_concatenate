@@ -2,14 +2,24 @@ from xml.etree import ElementTree as ET
 
 from svg_concat.svg.grid_merge import GridMergeJob
 from svg_concat.svg.measurement_unit import convert_to_pixels
+from xml.etree.ElementTree import ParseError
 
 
 def merge_svgs(output_file='merged.svg', *svg_files):
-    svgs = [ET.parse(svg_file).getroot() for svg_file in svg_files]
+    parsed_files = {}
+    svgs = []
+    for svg_file in svg_files:
+        try:
+            svgs.append(ET.parse(svg_file.path).getroot())
+            parsed_files[svg_file.name] = f"Managed to read file: {str(svg_file.path)}"
+        except ParseError as e:
+            parsed_files[svg_file.name] = f"Failed to read file: {str(svg_file.path)}"
 
     grid_merge_job = GridMergeJob(svgs)
 
     _write_merged_svg(output_file, grid_merge_job.svg)
+
+    return parsed_files
 
 
 def _write_merged_svg(output_file, merged_svg):

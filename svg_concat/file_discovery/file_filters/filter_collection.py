@@ -1,6 +1,26 @@
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
-from svg_concat.file_discovery.file_filters.inverse_filter import Filter
+from svg_concat.file_discovery.file_filters.inverse_filter import Filter, InverseFilter
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
+
+
+def create_from_json(data: list[dict]) -> "FilterCollection":
+    filter_collection = FilterCollection()
+    for filter_dict in data:
+        filter_collection.upsert(_create_filter_from_json(filter_dict))
+
+    return filter_collection
+
+
+def _create_filter_from_json(filter_dict: dict) -> Filter:
+    if "names" in filter_dict:
+        return NameFilter(filter_dict["names"])
+
+    if "inverted_filter" in filter_dict:
+        internal_filter = _create_filter_from_json(filter_dict["inverted_filter"])
+        return InverseFilter(internal_filter)
+
+    if "allowed_suffixes" in filter_dict:
+        return FileSuffixFilter(filter_dict["allowed_suffixes"])
 
 
 class FilterCollection:
@@ -21,6 +41,9 @@ class FilterCollection:
             count += 1
 
         return count
+
+    def __str__(self) -> str:
+        output = f"{FilterCollection.__name__}("
 
     def get(self, filter_to_find, default=None) -> Filter | set[Filter]:
         instance = filter_to_find.create_dummy_instance()
@@ -63,7 +86,6 @@ class FilterCollection:
                 self.names_filter.merge(value)
             else:
                 self.names_filter = value
-
         else:
             self.other_filters.add(value)
 

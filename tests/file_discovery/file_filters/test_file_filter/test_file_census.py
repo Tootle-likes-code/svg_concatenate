@@ -25,17 +25,17 @@ class ConstructorTests(FileCensusTests):
         test_census = FileCensus("test")
 
         # Assert
-        self.assertSetEqual(set(), test_census.criteria)
+        self.assertSetEqual(set(), test_census.filters)
 
     def test_file_criteria_is_value_sets_to_value(self):
         # Arrange
         expected_result = {MockFilter(True), MockFilter()}
 
         # Act
-        test_census = FileCensus("test", criteria={MockFilter(True), MockFilter()})
+        test_census = FileCensus("test", filters={MockFilter(True), MockFilter()})
 
         # Assert
-        self.assertSetEqual(expected_result, test_census.criteria)
+        self.assertSetEqual(expected_result, test_census.filters)
 
 
 if __name__ == '__main__':

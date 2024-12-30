@@ -36,3 +36,6 @@ class DirectorySelectFrame(ttk.Frame):
 
     def path_updated(self, *_):
         self.update_callback(self.selected_file_path.get())
+
+    def update_text(self, new_directory: str):
+        self.selected_file_path.set(new_directory)
