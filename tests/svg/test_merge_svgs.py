@@ -35,7 +35,6 @@ class MergeSvgsTests(unittest.TestCase):
         # Assert
         self.assertEqual(expected_result, result)
 
-
     def test_line_merge_svgs(self):
         # Arrange
         files_to_merge = ["test_files/Sub folder/Aadhira.svg", "test_files/Sub folder/Sub Sub Folder/Best Man.svg"]

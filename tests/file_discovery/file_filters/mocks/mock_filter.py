@@ -17,7 +17,7 @@ class MockFilter(Filter):
         return self.result == other.result and self.name == other.name
 
     def __hash__(self):
-        return hash(hash(self.name)+hash(self.result))
+        return hash(hash(self.name) + hash(self.result))
 
     def is_valid(self, file_name: str) -> bool:
         return self.result
