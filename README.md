@@ -7,6 +7,23 @@ svg_concatenate works using a series of filters and a given location to find the
 then concatenate the `svg` contents in those files into a single file.  Reporting on missing files, and saving the
 report and the merged `svg` into a user defined output folder.
 
+## Bare Minimum Required to Run
+
+To run, you need to fill out:
+
+- Directory to Search
+- Directory to Save
+- SVG File Name
+- Report File Name
+
+With these entries filled in, the program will go through all of the files and directories in the `Directory to Search`
+and find the files there.  Once found, those files will try to be merged and saved in the `Directory to Save` 
+with the `SVG File Name`.  Finally, a report will be printed to the UI and saved to the `Report File Name` also in the
+`Directory to Save` location.
+
+If you want to only include specific files or file types, you will need to apply filters.  Filters are used in the file
+searching step of the process and will act to either allow or deny files into the found list.
+
 ## Adding Filters
 
 Upon clicking the `Add Search Filter` button, a new window will open called `New Filter`, with a dropdown box and an
@@ -95,6 +112,11 @@ However, if you paste the above into the New Name text box, you will get
 #### Enter Override
 If the cursor is in the `New Name` text box, then the `Return` key will instead, count as clicking the `Add` 
 Button instead. The `Enter` key retains the Create Shortcut, however.
+
+#### Required Files Check
+The Names filter doubles up as a required names check. The names in this filter will be checked for during the search.
+If at the end of it, the files are not found, then the process will fail and report a list of missing files for you to
+be look through.
 
 ### Inverse Filter
 Inverse Filters work on another Filter, converting it to a black list.  For example, if I have an Inverse Filter based
