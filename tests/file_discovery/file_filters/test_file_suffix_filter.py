@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
@@ -48,22 +49,22 @@ class ConstructorTest(FileSuffixFilterTests):
 class IsValidTests(FileSuffixFilterTests):
     def test_returns_true_if_file_ends_with_valid_suffix(self):
         # Act
-        result = self.test_filter.is_valid("test.svg")
+        result = self.test_filter.is_valid(Path("test.svg"))
 
         # Assert
         self.assertTrue(result)
 
     def test_returns_false_if_file_does_not_use_suffix(self):
         # Assert
-        self.assertFalse(self.test_filter.is_valid("test.png"))
+        self.assertFalse(self.test_filter.is_valid(Path("test.png")))
 
     def test_does_not_return_none_if_file_does_not_use_suffix(self):
         # Assert
-        self.assertIsNotNone(self.test_filter.is_valid("test.png"))
+        self.assertIsNotNone(self.test_filter.is_valid(Path("test.png")))
 
     def test_returns_true_if_file_is_in_allowed_but_not_the_first(self):
         # Assert
-        self.assertTrue(self.test_filter.is_valid("test.txt"))
+        self.assertTrue(self.test_filter.is_valid(Path("test.txt")))
 
 
 class MergeTests(FileSuffixFilterTests):

@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
@@ -15,7 +16,7 @@ class IsValidTests(NameFilterTests):
         test_filter = NameFilter(['test_name'])
 
         # Act
-        result = test_filter.is_valid('test_name')
+        result = test_filter.is_valid(Path('test_name'))
 
         # Assert
         self.assertTrue(result)
@@ -24,7 +25,7 @@ class IsValidTests(NameFilterTests):
         test_filter = NameFilter(['test_name'])
 
         # Act
-        result = test_filter.is_valid('not_test_name')
+        result = test_filter.is_valid(Path('not_test_name'))
 
         # Assert
         self.assertFalse(result)
