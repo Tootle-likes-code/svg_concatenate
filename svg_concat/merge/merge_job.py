@@ -2,7 +2,6 @@ from datetime import datetime, timezone
 
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.job_task import JobTask
-from svg_concat.svg.merge_config import MergeConfig
 
 
 class MergeJob:

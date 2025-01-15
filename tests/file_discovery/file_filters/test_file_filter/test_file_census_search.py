@@ -12,15 +12,15 @@ def create_result_with_all_files_found(builder: CensusResultBuilder = None):
     if builder is None:
         builder = census_result_builder.create_census_result()
 
-    return (builder.with_found_file("test_files\\Sub folder\\Aaden.svg", "Aaden.svg")
-            .with_found_file("test_files\\Sub folder\\Aadhira.svg", "Aadhira.svg")
-            .with_found_file("test_files\\Sub folder\\Rūta.svg", "Rūta.svg")
-            .with_found_file("test_files\\Sub folder\\Sub Sub Folder\\Best Man.svg", "Best Man.svg")
-            .with_found_file("test_files\\Sub folder\\Sub Sub Folder\\Maid of Honour.svg", "Maid of Honour.svg")
-            .with_found_file("test_files\\Other Sub Folder\\Aaliyah.svg", "Aaliyah.svg")
-            .with_found_file("test_files\\Aakash.svg", "Aakash.svg")
-            .with_found_file("test_files\\test1.txt", "test1.txt")
-            .with_found_file("test_files\\Aaleah.svg", "Aaleah.svg")
+    return (builder.with_found_file("test_files\\Sub folder\\Aaden.svg")
+            .with_found_file("test_files\\Sub folder\\Aadhira.svg")
+            .with_found_file("test_files\\Sub folder\\Rūta.svg")
+            .with_found_file("test_files\\Sub folder\\Sub Sub Folder\\Best Man.svg")
+            .with_found_file("test_files\\Sub folder\\Sub Sub Folder\\Maid of Honour.svg")
+            .with_found_file("test_files\\Other Sub Folder\\Aaliyah.svg")
+            .with_found_file("test_files\\Aakash.svg")
+            .with_found_file("test_files\\test1.txt")
+            .with_found_file("test_files\\Aaleah.svg")
             .build())
 
 
@@ -53,11 +53,11 @@ class FindAllFilesTests(SearchTests):
     def test_file_filter_census_all_found_files(self):
         # Assert
         expected_result = (census_result_builder.create_census_result()
-                           .with_found_file("test_files\\Sub folder\\Aaden.svg", "Aaden.svg")
-                           .with_found_file("test_files\\Sub folder\\Rūta.svg", "Rūta.svg")
-                           .with_found_file("test_files\\Other Sub Folder\\Aaliyah.svg", "Aaliyah.svg")
-                           .with_found_file("test_files\\test1.txt", "test1.txt")
-                           .with_found_file("test_files\\Aaleah.svg", "Aaleah.svg")
+                           .with_found_file("test_files\\Sub folder\\Aaden.svg")
+                           .with_found_file("test_files\\Sub folder\\Rūta.svg")
+                           .with_found_file("test_files\\Other Sub Folder\\Aaliyah.svg")
+                           .with_found_file("test_files\\test1.txt")
+                           .with_found_file("test_files\\Aaleah.svg")
                            .build())
         names = {"Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"}
         test_filter = NameFilter(names)
@@ -74,7 +74,7 @@ class FindAllFilesTests(SearchTests):
         expected_result = (census_result_builder.create_census_result()
                            .with_missing_file("new.txt")
                            .build())
-        test_census = FileCensus("test_files", files_to_find=["new.txt"])
+        test_census = FileCensus("test_files", files_to_find={"new.txt"})
 
         # Act
         result = test_census.search_directory()

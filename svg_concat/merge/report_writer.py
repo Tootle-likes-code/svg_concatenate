@@ -4,6 +4,9 @@ from svg_concat.job_tasks.job_result import JobResult
 
 
 def write_report(report_path: Path, result: JobResult):
+    if not report_path.is_file():
+        return
+
     with report_path.open('w', encoding="UTF-8") as report_file:
         if result.is_success:
             report_file.write("Status: Success")

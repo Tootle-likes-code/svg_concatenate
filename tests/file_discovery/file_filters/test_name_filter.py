@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from tests.file_discovery.file_filters.mocks.mock_filter import MockFilter
@@ -9,13 +10,26 @@ class NameFilterTests(unittest.TestCase):
         pass
 
 
+class NamesWithCountTests(NameFilterTests):
+    def test_duplicate_names_give_incresed_count(self):
+        # Arrange
+        expected_result = {"Joe": 2, "Anya": 1}
+        test_filter = NameFilter(["Joe", "Joe", "Anya"])
+        
+        # Act
+        result = test_filter.names_with_count
+        
+        # Assert
+        self.assertDictEqual(expected_result, result)
+
+
 class IsValidTests(NameFilterTests):
     def test_contained_name_is_passed_returns_true(self):
         # Arrange
         test_filter = NameFilter(['test_name'])
 
         # Act
-        result = test_filter.is_valid('test_name')
+        result = test_filter.is_valid(Path('test_name'))
 
         # Assert
         self.assertTrue(result)
@@ -24,7 +38,7 @@ class IsValidTests(NameFilterTests):
         test_filter = NameFilter(['test_name'])
 
         # Act
-        result = test_filter.is_valid('not_test_name')
+        result = test_filter.is_valid(Path('not_test_name'))
 
         # Assert
         self.assertFalse(result)

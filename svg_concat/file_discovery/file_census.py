@@ -16,7 +16,7 @@ class FileCensus:
         self.starting_directory = starting_directory
 
         if filters is None:
-            self.filters = set()
+            self.filters = list()
         elif isinstance(filters, FilterCollection):
             self.filters = filters.values()
             if files_to_find is None and filters.names_filter is not None:

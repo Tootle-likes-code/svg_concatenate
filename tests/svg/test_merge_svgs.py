@@ -20,16 +20,16 @@ class MergeSvgsTests(unittest.TestCase):
     def test_loaded_file_is_merged_correctly(self):
         # Arrange
         files_to_merge = [
-            CensusedFile("Aadhira", Path("test_files/Sub folder/Aadhira.svg")),
-            CensusedFile("Best Man", Path("test_files/Sub folder/Sub Sub Folder/Best Man.svg")),
-            CensusedFile("Aaleah", Path("test_files/Aaleah.svg")),
-            CensusedFile("Aaliyah", Path("test_files/Other Sub Folder/Aaliyah.svg"))
+            (CensusedFile("Aadhira", Path("test_files/Sub folder/Aadhira.svg")), 1),
+            (CensusedFile("Best Man", Path("test_files/Sub folder/Sub Sub Folder/Best Man.svg")), 1),
+            (CensusedFile("Aaleah", Path("test_files/Aaleah.svg")), 1),
+            (CensusedFile("Aaliyah", Path("test_files/Other Sub Folder/Aaliyah.svg")), 1)
         ]
         output_location = "wip/test_output/merge_svgs/test_loaded_file_is_merged_correctly.svg"
         expected_result = expected_results.test_merge_svgs_results[self.test_loaded_file_is_merged_correctly.__name__]
 
         # Act
-        merge_svgs(output_location, *files_to_merge)
+        merge_svgs(output_location, files_to_merge)
         result = load_file(output_location)
 
         # Assert

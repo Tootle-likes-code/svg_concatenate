@@ -14,7 +14,7 @@ def _create_file_suffix_filter(*args) -> FileSuffixFilter:
 
 
 def _create_name_filter(*args) -> NameFilter:
-    file_names = set(args[0])
+    file_names = args[0]
     return name_filter.create_filter(file_names)
 
 

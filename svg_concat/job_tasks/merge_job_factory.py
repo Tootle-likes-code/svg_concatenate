@@ -1,8 +1,8 @@
 from svg_concat.job_tasks.find_files_task import FindFilesTask
 from svg_concat.job_tasks.merge_svgs_task import MergeSvgsTask
 from svg_concat.job_tasks.verify_paths_task import VerifyPathsTask
-from svg_concat.svg.merge_config import MergeConfig
-from svg_concat.svg.merge_job import MergeJob
+from svg_concat.merge.merge_config import MergeConfig
+from svg_concat.merge.merge_job import MergeJob
 
 
 def create(merge_config: MergeConfig) -> MergeJob:
