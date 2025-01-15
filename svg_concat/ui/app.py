@@ -13,6 +13,9 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('SVG Concatenate')
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(5, weight=1)
+        self.rowconfigure(2, weight=1)
 
         menubar = tk.Menu(self)
         file_menu = tk.Menu(menubar, tearoff=0)
@@ -32,16 +35,19 @@ class App(tk.Tk):
         )
         self.run_button = ttk.Button(self, text="Concatenate", command=kwargs["run_button_action"],
                                      padding=shared.X_PADDING, state=tk.DISABLED)
-        separator = ttk.Separator(self)
+        separator = ttk.Separator(self, orient=tk.VERTICAL)
         self.report_section = ReportSectionFrame(self)
 
-        self.directory_to_search_frame.pack(side=tk.TOP, fill=tk.X, anchor=tk.E)
-        self.filter_frame.pack(side=tk.TOP, fill=tk.X, anchor=tk.E)
-        self.directory_to_output.pack(side=tk.TOP, fill=tk.X)
-        self.run_button.pack(side=tk.TOP, anchor=tk.E, padx=shared.X_PADDING, pady=shared.Y_PADDING)
-        separator.pack(side=tk.TOP, fill=tk.X, anchor=tk.E,
-                       padx=shared.SEPARATOR_PADDING, pady=shared.SEPARATOR_PADDING)
-        self.report_section.pack(side=tk.TOP, fill=tk.BOTH, anchor=tk.E)
+        self.directory_to_search_frame.grid(row=0, column=0, columnspan=4, sticky=tk.NSEW,
+                                            padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        self.filter_frame.grid(row=1, column=0, columnspan=4, sticky=tk.NSEW,
+                               padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        self.directory_to_output.grid(row=2, column=0, columnspan=4, sticky=tk.NSEW,
+                                      padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        self.run_button.grid(row=3, column=3, sticky=tk.E, padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        separator.grid(row=0, column=4, rowspan=4, sticky=tk.NS, padx=shared.X_PADDING, pady=shared.Y_PADDING)
+        self.report_section.grid(row=0, column=5, columnspan=2, rowspan=4, sticky=tk.NSEW,
+                                 padx=shared.X_PADDING, pady=shared.Y_PADDING)
 
         self.config(menu=menubar)
         self.directory_to_search_frame.bind()
