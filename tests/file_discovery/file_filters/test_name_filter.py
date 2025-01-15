@@ -10,6 +10,19 @@ class NameFilterTests(unittest.TestCase):
         pass
 
 
+class NamesWithCountTests(NameFilterTests):
+    def test_duplicate_names_give_incresed_count(self):
+        # Arrange
+        expected_result = {"Joe": 2, "Anya": 1}
+        test_filter = NameFilter(["Joe", "Joe", "Anya"])
+        
+        # Act
+        result = test_filter.names_with_count
+        
+        # Assert
+        self.assertDictEqual(expected_result, result)
+
+
 class IsValidTests(NameFilterTests):
     def test_contained_name_is_passed_returns_true(self):
         # Arrange

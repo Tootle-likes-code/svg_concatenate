@@ -16,7 +16,7 @@ class FileCensus:
         self.starting_directory = starting_directory
 
         if filters is None:
-            self.filters = set()
+            self.filters = list()
         elif isinstance(filters, FilterCollection):
             self.filters = filters.values()
             if files_to_find is None and filters.names_filter is not None:
@@ -29,7 +29,7 @@ class FileCensus:
 
         self.files_to_find: NameFilter = name_filter.create_filter(files_to_find)
         if self.files_to_find is not None:
-            self.filters.add(self.files_to_find)
+            self.filters.append(self.files_to_find)
 
     def search_directory(self) -> CensusResult:
         search_result_builder = census_result_builder.create_census_result()

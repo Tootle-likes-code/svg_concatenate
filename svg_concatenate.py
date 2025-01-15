@@ -1,6 +1,6 @@
 from svg_concat.ui.app_controller import AppController
 from svg_concat.ui.models.config_service import ConfigService
-from svg_concat.ui.models.concatenate_service import ConcatenateService
+from svg_concat.merge.concatenate_service import ConcatenateService
 from svg_concat.ui.models.filters_model import FiltersModel
 from svg_concat.ui.windows import set_dpi_awareness
 

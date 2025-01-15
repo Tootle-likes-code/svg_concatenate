@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from svg_concat.job_tasks.job_result import JobResult
-from svg_concat.svg.merge_config import MergeConfig
+from svg_concat.merge.merge_config import MergeConfig
 
 
 class JobTask(ABC):

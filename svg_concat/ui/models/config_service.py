@@ -1,8 +1,7 @@
 import json
 
 from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
-from svg_concat.svg.merge_config import MergeConfig, create as create_merge_config
-from svg_concat.svg.merge_config import MergeConfig as create_merge_config
+from svg_concat.merge.merge_config import MergeConfig, create as create_merge_config
 from svg_concat.file_discovery.file_filters import filter_collection
 
 

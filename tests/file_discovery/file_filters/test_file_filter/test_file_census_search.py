@@ -74,7 +74,7 @@ class FindAllFilesTests(SearchTests):
         expected_result = (census_result_builder.create_census_result()
                            .with_missing_file("new.txt")
                            .build())
-        test_census = FileCensus("test_files", files_to_find=["new.txt"])
+        test_census = FileCensus("test_files", files_to_find={"new.txt"})
 
         # Act
         result = test_census.search_directory()

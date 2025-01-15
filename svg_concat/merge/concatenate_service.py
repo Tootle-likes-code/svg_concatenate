@@ -1,7 +1,7 @@
 from svg_concat.job_tasks import merge_job_factory
 from svg_concat.job_tasks.job_result import JobResult
-from svg_concat.svg.merge_config import MergeConfig
-from svg_concat.ui.models import report_writer
+from svg_concat.merge.merge_config import MergeConfig
+from svg_concat.merge import report_writer
 
 
 class ConcatenateService:

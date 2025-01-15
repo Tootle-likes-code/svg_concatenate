@@ -6,7 +6,7 @@ from pathlib import Path
 from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.verify_paths_task import VerifyPathsTask
-from svg_concat.svg import merge_config
+from svg_concat.merge import merge_config
 from tests.test_helpers import merge_config_builder
 
 

@@ -1,8 +1,10 @@
 from pathlib import Path
 
+from svg_concat.file_discovery.file_filters.file_suffix_filter import FileSuffixFilter
 from svg_concat.file_discovery.file_filters.filter import Filter
 from svg_concat.file_discovery.file_filters.filter_collection import FilterCollection
-from svg_concat.svg.merge_config import MergeConfig
+from svg_concat.file_discovery.file_filters.name_filter import NameFilter
+from svg_concat.merge.merge_config import MergeConfig
 
 
 def create() -> "MergeConfigBuilder":
@@ -52,6 +54,14 @@ class MergeConfigBuilder:
 
     def with_filters(self, filters: FilterCollection) -> "MergeConfigBuilder":
         self._filters = filters
+        return self
+
+    def with_name_filter(self, *names) -> "MergeConfigBuilder":
+        self._filters.upsert(NameFilter(names))
+        return self
+
+    def with_file_suffix_filter(self, *suffixes):
+        self._filters.upsert(FileSuffixFilter(suffixes))
         return self
 
     def with_filter(self, filter_: Filter) -> "MergeConfigBuilder":

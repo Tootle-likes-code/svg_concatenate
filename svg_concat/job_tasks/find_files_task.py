@@ -2,7 +2,7 @@ from svg_concat.file_discovery.file_census import FileCensus
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.job_task import JobTask
 from svg_concat.job_tasks.missing_merge_config_error import MissingMergeConfigError
-from svg_concat.svg.merge_config import MergeConfig
+from svg_concat.merge.merge_config import MergeConfig
 
 
 class FindFilesTask(JobTask):
@@ -18,7 +18,7 @@ class FindFilesTask(JobTask):
         job_result.add_message("File Search: Searching for Files")
         census = FileCensus(str(self.merge_config.initial_directory),
                             self.merge_config.filters,
-                            self.merge_config.names_to_find()
+                            set(self.merge_config.names_to_find().keys())
                             )
 
         result = census.search_directory()

@@ -11,12 +11,23 @@ def create_filter(file_names):
 
 
 class NameFilter(Filter):
-    def __init__(self, names: set[str]):
+    def __init__(self, names: list[str]):
         self.names = names
 
     @classmethod
     def create_dummy_instance(cls):
-        return NameFilter(set())
+        return NameFilter([])
+
+    @property
+    def names_with_count(self) -> dict[str, int]:
+        counted_names = {}
+        for name in self.names:
+            if name in counted_names:
+                counted_names[name] += 1
+            else:
+                counted_names[name] = 1
+
+        return counted_names
 
     def __eq__(self, other):
         if not isinstance(other, NameFilter):

@@ -26,7 +26,7 @@ class MergeConfig:
     report_path: Path
     filters: FilterCollection
 
-    def names_to_find(self) -> set[str]:
+    def names_to_find(self) -> dict[str, int]:
         if self.filters.names_filter is not None:
-            return self.filters.names_filter.names
-        return set()
+            return self.filters.names_filter.names_with_count
+        return {}
