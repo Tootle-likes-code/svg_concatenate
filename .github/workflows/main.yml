@@ -27,12 +27,33 @@ jobs:
       - name: Run Pyinstaller
         run: |
           pyinstaller --onefile -w svg_concatenate.py -n svg_concatenate.exe
-
-      - name: List Files
-        run: ls -R
       
       - name: Upload Exe file
         uses: actions/upload-artifact@v4
         with:
           name: svg_concatenate
           path: dist/svg_concatenate.exe
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: '${{ github.run_number }}'
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: ${{ env.VERSION }}
+          body: ${{ github.event.commits[0].message }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/svg_concatenate.exe
+          asset_name: svg_concatenate.exe
+          asset_content_type: application/zip
