@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    
+    steps:
+      - name: Pull
+        uses: actions/checkout@v4
+      
+      
