@@ -22,7 +22,7 @@ jobs:
            path: svg_concatenate.py
       
       - name: Upload Exe file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: svg_concatenate
           path: src/dist/windows
