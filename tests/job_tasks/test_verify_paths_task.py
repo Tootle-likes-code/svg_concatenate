@@ -7,7 +7,7 @@ from svg_concat.file_discovery.file_filters.filter_collection import FilterColle
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.verify_paths_task import VerifyPathsTask
 from svg_concat.merge import merge_config
-from tests.test_helpers import merge_config_builder
+from tests.test_helpers import merge_config_builder, file_helper
 
 
 class VerifyPathTaskTests(unittest.TestCase):
@@ -23,7 +23,7 @@ class PerformTaskTests(VerifyPathTaskTests):
 
     @classmethod
     def setUpClass(cls):
-        with open("test_config.json", "r") as test_config:
+        with open(file_helper.get_path_to("test_config.json"), "r") as test_config:
             config = json.load(test_config)
         cls.test_files = Path(config["test_folder"])
         cls.test_files.mkdir(exist_ok=True)

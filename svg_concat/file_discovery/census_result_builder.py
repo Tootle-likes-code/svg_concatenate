@@ -2,6 +2,7 @@ from pathlib import Path
 
 from svg_concat.file_discovery.census_result import CensusResult
 from svg_concat.file_discovery.censused_file import CensusedFile
+from tests.test_helpers import file_helper
 
 
 def create_census_result() -> "CensusResultBuilder":
@@ -18,7 +19,7 @@ class CensusResultBuilder:
 
     def with_found_file(self, file_path: Path | str) -> "CensusResultBuilder":
         if isinstance(file_path, str):
-            file_path = Path(file_path)
+            file_path = file_helper.get_path_to(file_path)
 
         self.found_files.add(CensusedFile(name=file_path.stem, path=file_path))
         return self

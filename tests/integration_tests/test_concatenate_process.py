@@ -1,10 +1,11 @@
 import json
+import os
 import unittest
 from pathlib import Path
 
 from svg_concat.merge.concatenate_service import ConcatenateService
 from tests.integration_tests import expected_results
-from tests.test_helpers import merge_config_builder
+from tests.test_helpers import merge_config_builder, file_helper
 
 DEFAULT_TEST_FOLDER = Path("test_files")
 
@@ -12,15 +13,18 @@ DEFAULT_TEST_FOLDER = Path("test_files")
 class ConcatenateProcessTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+
+        path = file_helper.get_test_config_path_text()
+
         try:
-            with open("test_config.json") as config_file:
+            with open(path) as config_file:
                 config = json.load(config_file)
         except FileNotFoundError:
             print("Test config not found, cannot run tests")
             exit(1)
 
         cls.test_output_directories = {
-            "test_duplicate_names_are_represented_appropriately": Path(config["test_output_directory"]).joinpath(
+            "test_duplicate_names_are_represented_appropriately": file_helper.get_path_to(config["test_output_directory"]).joinpath(
                 "test_duplicate_names_are_represented_appropriately.svg"),
         }
 
