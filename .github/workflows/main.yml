@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Pyinstaller
         run: |
-          pyinstaller --onefile -w svg_concatenate.py
+          pyinstaller --onefile -w svg_concatenate.py -n svg_concatenate.exe
 
       - name: List Files
         run: ls -R
