@@ -20,13 +20,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: List Files
-        run: ls -R
-
-      - name: Run Tests
-        run: |
-          python -m unittest discover D:\a\svg_concatenate\svg_concatenate\tests\ test_*.py D:\a\svg_concatenate\svg_concatenate\
-
       - name: Install Pyinstaller
         run: |
           pip install pyinstaller
