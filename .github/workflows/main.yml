@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Pyinstaller
         run: |
-          py -m pyinstaller --onefile -w svg_concatenate.py
+          python -m pyinstaller --onefile -w svg_concatenate.py
       
       - name: Upload Exe file
         uses: actions/upload-artifact@v4
