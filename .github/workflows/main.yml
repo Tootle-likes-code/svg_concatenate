@@ -10,5 +10,19 @@ jobs:
     steps:
       - name: Pull
         uses: actions/checkout@v4
+
+      - name: Get_Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: '3.12'
+
+      - name: Package Application
+        uses: vednig/pyinstaller-action-windows@main
+        with:
+           path: svg_concatenate.py
       
-      
+      - name: Upload Exe file
+        uses: actions/upload-artifact@v2
+        with:
+          name: svg_concatenate
+          path: src/dist/windows
