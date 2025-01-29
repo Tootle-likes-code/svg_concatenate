@@ -11,6 +11,8 @@ DEFAULT_TEST_FOLDER = Path("test_files")
 
 
 class ConcatenateProcessTests(unittest.TestCase):
+    config: bool = False
+
     @classmethod
     def setUpClass(cls):
 
@@ -20,8 +22,8 @@ class ConcatenateProcessTests(unittest.TestCase):
             with open(path) as config_file:
                 config = json.load(config_file)
         except FileNotFoundError:
-            print("Test config not found, cannot run tests")
-            exit(1)
+            cls.skip = True
+            return
 
         cls.test_output_directories = {
             "test_duplicate_names_are_represented_appropriately": file_helper.get_path_to(config["test_output_directory"]).joinpath(
@@ -30,11 +32,15 @@ class ConcatenateProcessTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        if cls.skip:
+            return
         for test_file in cls.test_output_directories.values():
             #test_file.unlink()
             pass
 
     def setUp(self):
+        if self.skip:
+            self.skipTest("No Config")
         self.test_concatenate_service = ConcatenateService()
 
 
