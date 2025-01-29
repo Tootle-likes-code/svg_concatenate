@@ -16,13 +16,20 @@ jobs:
         with:
             python-version: '3.12'
 
-      - name: Package Application
-        uses: vednig/pyinstaller-action-windows@main
-        with:
-           path: svg_concatenate.py
+      - name: Install Requirements
+        run: |
+          pip install -r requirements.txt
+
+      - name: Install Pyinstaller
+        run: |
+          pip install pyinstaller
+
+      - name: Run Pyinstaller
+        run: |
+          py -m pyinstaller --onefile -w svg_concatenate.py
       
       - name: Upload Exe file
         uses: actions/upload-artifact@v4
         with:
           name: svg_concatenate
-          path: src/dist/windows
+          path: dist/svg_concatenate.exe
