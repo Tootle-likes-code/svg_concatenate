@@ -11,7 +11,7 @@ DEFAULT_TEST_FOLDER = Path("test_files")
 
 
 class ConcatenateProcessTests(unittest.TestCase):
-    config: bool = False
+    skip: bool = False
 
     @classmethod
     def setUpClass(cls):
