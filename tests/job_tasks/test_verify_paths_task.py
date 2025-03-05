@@ -1,4 +1,3 @@
-import json
 import stat
 import unittest
 from pathlib import Path
@@ -7,7 +6,7 @@ from svg_concat.file_discovery.file_filters.filter_collection import FilterColle
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.verify_paths_task import VerifyPathsTask
 from svg_concat.merge import merge_config
-from tests.test_helpers import merge_config_builder, file_helper
+from tests.test_helpers import merge_config_builder
 
 
 class VerifyPathTaskTests(unittest.TestCase):
@@ -18,37 +17,31 @@ class VerifyPathTaskTests(unittest.TestCase):
 
 
 class PerformTaskTests(VerifyPathTaskTests):
-    test_files = None
-    folder = None
+    test_folder: Path
 
     @classmethod
     def setUpClass(cls):
-        with open(file_helper.get_path_to("test_config.json"), "r") as test_config:
-            config = json.load(test_config)
-        cls.test_files = Path(config["test_folder"])
-        cls.test_files.mkdir(exist_ok=True)
-        cls.test_files.chmod(stat.S_IWUSR)
-        print(f"Folder '{cls.test_files}' created.")
+        cls.test_folder = Path("tests/")
+        cls.locked_folder = Path("tests-locked/")
 
-        cls.folder = Path(config["read_only_folder"])
-        cls.folder.mkdir(exist_ok=True)
-        cls.folder.chmod(stat.S_IREAD)
-        print(f"Folder '{cls.folder}' created and set to read-only mode.")
+        if not cls.test_folder.exists():
+            cls.test_folder.mkdir()
+
+        if not cls.locked_folder.exists():
+            cls.locked_folder.mkdir()
+            cls.locked_folder.chmod(stat.S_IREAD)
 
     @classmethod
     def tearDownClass(cls):
-        cls.folder.chmod(stat.S_IWUSR)
-        cls.folder.rmdir()
-        print(f"Folder '{cls.folder}' removed.")
-
-        cls.test_files.rmdir()
-        print(f"Folder '{cls.test_files}' removed.")
+        cls.test_folder.rmdir()
+        cls.locked_folder.chmod(stat.S_IRWXU)
+        cls.locked_folder.rmdir()
 
     def setUp(self):
         super().setUp()
 
-        valid_svg_files = self.test_files.joinpath("svg.svg")
-        valid_report_files = self.test_files.joinpath("report.txt")
+        valid_svg_files = self.test_folder.joinpath("svg.svg")
+        valid_report_files = self.test_folder.joinpath("report.txt")
 
         no_instance_config = (merge_config_builder.create()
                               .with_initial_directory("fake/not_exists/")
@@ -58,7 +51,7 @@ class PerformTaskTests(VerifyPathTaskTests):
                               )
 
         no_svg_file_config = (merge_config_builder.create()
-                              .with_initial_directory(self.test_files)
+                              .with_initial_directory(self.test_folder)
                               .with_svg_file("fake/not_exists/")
                               .with_report_file(valid_report_files)
                               .build()
@@ -66,7 +59,7 @@ class PerformTaskTests(VerifyPathTaskTests):
 
         no_report_file_config = (merge_config_builder.create()
                                  .with_svg_file(valid_svg_files)
-                                 .with_initial_directory(self.test_files)
+                                 .with_initial_directory(self.test_folder)
                                  .with_report_file("fake/not_exists/")
                                  .build()
                                  )
@@ -165,9 +158,9 @@ class PerformTaskTests(VerifyPathTaskTests):
     def test_svg_file_directory_is_locked_returns_fatal(self):
         # Arrange
         config = (merge_config_builder.create()
-                  .with_initial_directory(self.test_files)
-                  .with_svg_file(self.folder.joinpath("svg.svg"))
-                  .with_report_file(self.test_files.joinpath("report.txt"))
+                  .with_initial_directory(self.locked_folder)
+                  .with_svg_file(self.locked_folder.joinpath("svg.svg"))
+                  .with_report_file(self.locked_folder.joinpath("report.txt"))
                   .build()
                   )
         test_task = VerifyPathsTask(config)
@@ -182,9 +175,9 @@ class PerformTaskTests(VerifyPathTaskTests):
         # Arrange
         expected_result = ("Verifying Paths: Given svg output location is not writable",)
         config = (merge_config_builder.create()
-                  .with_initial_directory(self.test_files)
-                  .with_svg_file(self.folder.joinpath("svg.svg"))
-                  .with_report_file(self.test_files.joinpath("report.txt"))
+                  .with_initial_directory(self.locked_folder)
+                  .with_svg_file(self.locked_folder.joinpath("svg.svg"))
+                  .with_report_file(self.test_folder.joinpath("report.txt"))
                   .build()
                   )
         test_task = VerifyPathsTask(config)
@@ -198,9 +191,9 @@ class PerformTaskTests(VerifyPathTaskTests):
     def test_report_file_directory_is_locked_returns_fatal(self):
         # Arrange
         config = (merge_config_builder.create()
-                  .with_initial_directory(self.test_files)
-                  .with_svg_file(self.test_files.joinpath("svg.svg"))
-                  .with_report_file(self.folder.joinpath("report.txt"))
+                  .with_initial_directory(self.locked_folder)
+                  .with_svg_file(self.locked_folder.joinpath("svg.svg"))
+                  .with_report_file(self.locked_folder.joinpath("report.txt"))
                   .build()
                   )
         test_task = VerifyPathsTask(config)
@@ -215,9 +208,9 @@ class PerformTaskTests(VerifyPathTaskTests):
         # Arrange
         expected_result = ("Verifying Paths: Given report output location is not writable",)
         config = (merge_config_builder.create()
-                  .with_initial_directory(self.test_files)
-                  .with_svg_file(self.test_files.joinpath("svg.svg"))
-                  .with_report_file(self.folder.joinpath("report.txt"))
+                  .with_initial_directory(self.locked_folder)
+                  .with_svg_file(self.test_folder.joinpath("svg.svg"))
+                  .with_report_file(self.locked_folder.joinpath("report.txt"))
                   .build()
                   )
         test_task = VerifyPathsTask(config)

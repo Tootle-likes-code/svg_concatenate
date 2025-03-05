@@ -5,7 +5,6 @@ from svg_concat.file_discovery.census_result_builder import CensusResultBuilder
 from svg_concat.file_discovery.file_census import FileCensus
 from svg_concat.file_discovery.file_filters.name_filter import NameFilter
 from tests.file_discovery.file_filters.test_file_filter.test_file_census import FileCensusTests
-from tests.test_helpers import file_helper
 
 
 @staticmethod
@@ -33,7 +32,7 @@ class FindAllFilesTests(SearchTests):
     def test_no_filter_census_result_for_every_file(self):
         # Arrange
         expected_result = create_result_with_all_files_found()
-        test_census = FileCensus(str(file_helper.get_path_to("test_files/")))
+        test_census = FileCensus("test_files/")
 
         # Act
         results = test_census.search_directory()
@@ -62,7 +61,7 @@ class FindAllFilesTests(SearchTests):
                            .build())
         names = {"Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"}
         test_filter = NameFilter(names)
-        test_census = FileCensus(str(file_helper.get_path_to("test_files/")), {test_filter})
+        test_census = FileCensus(str("test_files/"), {test_filter})
 
         # Act
         result = test_census.search_directory()
