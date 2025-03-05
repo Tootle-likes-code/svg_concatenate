@@ -42,10 +42,12 @@ class ValidConcatenateTests(ConcatenateProcessTests):
 
         # Assert
         self.assertTrue(self.test_file_path.exists())
-        result = None
-        with open(self.test_file_path) as f:
-            result = f.read()
-        self.assertEqual(expected_result, result)
+        try:
+            with open(self.test_file_path) as f:
+                result = f.read()
+            self.assertEqual(expected_result, result)
+        except FileNotFoundError as ex:
+            self.fail(f"Unable to load file:\n{ex}")
 
 
 if __name__ == '__main__':
