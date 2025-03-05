@@ -1,11 +1,12 @@
+import os
 import unittest
 from pathlib import Path
 
 from svg_concat.merge.concatenate_service import ConcatenateService
 from tests.integration_tests import expected_results
-from tests.test_helpers import merge_config_builder
+from tests.test_helpers import merge_config_builder, file_helper
 
-DEFAULT_TEST_FOLDER = Path("test_files")
+DEFAULT_TEST_FOLDER = file_helper.get_path("test_files")
 
 
 class ConcatenateProcessTests(unittest.TestCase):
@@ -16,7 +17,8 @@ class ConcatenateProcessTests(unittest.TestCase):
 class ValidConcatenateTests(ConcatenateProcessTests):
     def setUp(self):
         super().setUp()
-        self.test_file_path = Path(ValidConcatenateTests.__name__ + ".svg")
+
+        self.test_file_path = file_helper.get_path(f"{ValidConcatenateTests.__name__}.svg")
 
         self._clear_files()
 
@@ -36,6 +38,9 @@ class ValidConcatenateTests(ConcatenateProcessTests):
                        .with_file_suffix_filter(".svg")
                        .with_svg_file(self.test_file_path)
                        .build())
+
+        print(f"{ValidConcatenateTests.test_duplicate_names_are_in_file.__name__}:",
+              str(self.test_file_path.absolute()))
 
         # Act
         self.test_concatenate_service.concatenate(test_config)
