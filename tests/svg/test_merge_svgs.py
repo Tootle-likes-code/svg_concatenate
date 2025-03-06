@@ -4,6 +4,7 @@ from pathlib import Path
 from svg_concat.file_discovery.censused_file import CensusedFile
 from svg_concat.svg.merge_svgs import merge_svgs, line_merge_svgs
 from tests.svg import expected_results
+from tests.test_helpers import file_helper
 
 
 class MergeSvgsTests(unittest.TestCase):
@@ -22,10 +23,10 @@ class MergeSvgsTests(unittest.TestCase):
     def test_loaded_file_is_merged_correctly(self):
         # Arrange
         files_to_merge = [
-            (CensusedFile("Aadhira", Path("test_files/Sub folder/Aadhira.svg")), 1),
-            (CensusedFile("Best Man", Path("test_files/Sub folder/Sub Sub Folder/Best Man.svg")), 1),
-            (CensusedFile("Aaleah", Path("test_files/Aaleah.svg")), 1),
-            (CensusedFile("Aaliyah", Path("test_files/Other Sub Folder/Aaliyah.svg")), 1)
+            (CensusedFile("Aadhira", file_helper.get_path("test_files/Sub folder/Aadhira.svg")), 1),
+            (CensusedFile("Best Man", file_helper.get_path("test_files/Sub folder/Sub Sub Folder/Best Man.svg")), 1),
+            (CensusedFile("Aaleah", file_helper.get_path("test_files/Aaleah.svg")), 1),
+            (CensusedFile("Aaliyah", file_helper.get_path("test_files/Other Sub Folder/Aaliyah.svg")), 1)
         ]
         output_location = self.test_loaded_file_is_merged_correctly_output
         expected_result = expected_results.test_merge_svgs_results[self.test_loaded_file_is_merged_correctly.__name__]
