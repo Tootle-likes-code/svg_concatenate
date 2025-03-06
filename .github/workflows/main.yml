@@ -20,6 +20,10 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Run Tests
+        run: |
+          python -m unittest discover tests "test_*.py"
+
       - name: Install Pyinstaller
         run: |
           pip install pyinstaller
