@@ -55,17 +55,17 @@ class FindAllFilesTests(SearchTests):
     def test_file_filter_census_all_found_files(self):
         # Assert
         expected_result = (census_result_builder.create_census_result()
-                           .with_found_file("test_files/Sub folder/Aaden.svg")
-                           .with_found_file("test_files/Sub folder/Rūta.svg")
-                           .with_found_file("test_files/Other Sub Folder/Aaliyah.svg")
-                           .with_found_file("test_files/test1.txt")
-                           .with_found_file("test_files/Aaleah.svg")
+                           .with_found_file(file_helper.get_path("test_files/Sub folder/Aaden.svg"))
+                           .with_found_file(file_helper.get_path("test_files/Sub folder/Rūta.svg"))
+                           .with_found_file(file_helper.get_path("test_files/Other Sub Folder/Aaliyah.svg"))
+                           .with_found_file(file_helper.get_path("test_files/test1.txt"))
+                           .with_found_file(file_helper.get_path("test_files/Aaleah.svg"))
                            .build())
         names = {"Aaden.svg", "Rūta.svg", "Aaleah.svg", "Aaliyah.svg", "test1.txt"}
         test_filter = NameFilter(names)
-        test_census = FileCensus(str("test_files/"), {test_filter})
+        test_census = FileCensus(str(file_helper.get_path("test_files/")), {test_filter})
 
-        # Act
+        # Actfile_helper.get_path(
         result = test_census.search_directory()
 
         # Assert
