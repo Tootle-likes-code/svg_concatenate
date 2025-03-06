@@ -39,9 +39,6 @@ class ValidConcatenateTests(ConcatenateProcessTests):
                        .with_svg_file(self.test_file_path)
                        .build())
 
-        print(f"{ValidConcatenateTests.test_duplicate_names_are_in_file.__name__}:",
-              str(self.test_file_path.absolute()))
-
         # Act
         self.test_concatenate_service.concatenate(test_config)
 
