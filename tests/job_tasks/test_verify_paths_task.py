@@ -6,7 +6,7 @@ from svg_concat.file_discovery.file_filters.filter_collection import FilterColle
 from svg_concat.job_tasks.job_result import JobResult
 from svg_concat.job_tasks.verify_paths_task import VerifyPathsTask
 from svg_concat.merge import merge_config
-from tests.test_helpers import merge_config_builder
+from tests.test_helpers import merge_config_builder, file_helper
 
 
 class VerifyPathTaskTests(unittest.TestCase):
@@ -21,8 +21,8 @@ class PerformTaskTests(VerifyPathTaskTests):
 
     @classmethod
     def setUpClass(cls):
-        cls.test_folder = Path("tests/")
-        cls.locked_folder = Path("tests-locked/")
+        cls.test_folder = file_helper.get_path("tests/")
+        cls.locked_folder = file_helper.get_path("tests-locked/")
 
         if not cls.test_folder.exists():
             cls.test_folder.mkdir()
@@ -33,6 +33,7 @@ class PerformTaskTests(VerifyPathTaskTests):
 
     @classmethod
     def tearDownClass(cls):
+        print(str(cls.test_folder))
         cls.test_folder.rmdir()
         cls.locked_folder.chmod(stat.S_IRWXU)
         cls.locked_folder.rmdir()
