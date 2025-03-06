@@ -45,8 +45,8 @@ class MergeSvgsTests(unittest.TestCase):
     def test_line_merge_svgs(self):
         # Arrange
         files_to_merge = [
-            "test_files/Sub folder/Aadhira.svg",
-            "test_files/Sub folder/Sub Sub Folder/Best Man.svg"
+            file_helper.get_path("test_files/Sub folder/Aadhira.svg"),
+            file_helper.get_path("test_files/Sub folder/Sub Sub Folder/Best Man.svg")
         ]
         output_location = self.test_line_merge_svgs_output
         expected_result = expected_results.test_merge_svgs_results[self.test_line_merge_svgs.__name__]
