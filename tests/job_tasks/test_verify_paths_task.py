@@ -33,7 +33,6 @@ class PerformTaskTests(VerifyPathTaskTests):
 
     @classmethod
     def tearDownClass(cls):
-        print(str(cls.test_folder))
         cls.test_folder.rmdir()
         cls.locked_folder.chmod(stat.S_IRWXU)
         cls.locked_folder.rmdir()
